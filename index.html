@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNMASK at Work™ | Master Interactive Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Urbanist:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --exec-navy: #0B1530;
+            --exec-blue: #123D72;
+            --exec-teal: #58BBC2;
+            --exec-ink: #121721;
+            --exec-steel: #DDE6EF;
+            --rose-danger: #F43F5E;
+        }
+        body { font-family: 'Urbanist', sans-serif; background-color: #F8FAFC; color: var(--exec-ink); margin: 0; padding: 0; scroll-behavior: smooth; }
+        h1, h2, h3, h4, .font-serif { font-family: 'Lora', serif; }
+        .blueprint-grid { background-image: radial-gradient(var(--exec-steel) 1.5px, transparent 1.5px); background-size: 30px 30px; }
+        .logo-block { background: var(--exec-navy); color: white; padding: 4px 10px; font-weight: 900; letter-spacing: -0.05em; display: inline-block; transform: skew(-10deg); border-right: 4px solid var(--exec-teal); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .active-nav { border-bottom: 3px solid var(--exec-teal); color: var(--exec-navy); font-weight: 900; }
+        .prose-text { line-height: 1.8; font-size: 1.125rem; color: #334155; }
+        .card { background: white; border-radius: 1.5rem; border: 1px solid var(--exec-steel); padding: 2.5rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05); }
+        .chart-container { position: relative; width: 100%; height: 350px; }
+        .sidebar-accent { border-left: 8px solid var(--exec-blue); }
+        .btn-exec { background: var(--exec-navy); color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 700; transition: all 0.3s ease; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- EXECUTIVE NAVIGATION -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 px-6 py-4 flex flex-col lg:flex-row justify-between items-center gap-4" data-html2canvas-ignore="true">
+        <div class="flex items-center gap-4">
+            <div class="logo-block uppercase">UNMASK</div>
+            <div class="text-sm font-bold text-slate-500 tracking-widest uppercase">Volume 2: at Work™</div>
+        </div>
+        <div class="flex gap-2 md:gap-4 overflow-x-auto w-full lg:w-auto pb-2 lg:pb-0 text-[10px] font-black uppercase tracking-widest text-slate-400">
+            <button onclick="showPillar('exec-use')" id="nav-exec-use" class="nav-btn py-1 px-2 whitespace-nowrap active-nav">Strategic Use</button>
+            <button onclick="showPillar('intro')" id="nav-intro" class="nav-btn py-1 px-2 whitespace-nowrap">Intro</button>
+            <button onclick="showPillar('uncover')" id="nav-uncover" class="nav-btn py-1 px-2 whitespace-nowrap">01 Uncover</button>
+            <button onclick="showPillar('navigate')" id="nav-navigate" class="nav-btn py-1 px-2 whitespace-nowrap">02 Navigate</button>
+            <button onclick="showPillar('manage')" id="nav-manage" class="nav-btn py-1 px-2 whitespace-nowrap">03 Manage</button>
+            <button onclick="showPillar('advocate')" id="nav-advocate" class="nav-btn py-1 px-2 whitespace-nowrap">04 Advocate</button>
+            <button onclick="showPillar('sustain')" id="nav-sustain" class="nav-btn py-1 px-2 whitespace-nowrap">05 Sustain</button>
+            <button onclick="showPillar('kindle')" id="nav-kindle" class="nav-btn py-1 px-2 whitespace-nowrap">06 Kindle</button>
+        </div>
+        <button id="downloadBtn" class="bg-exec-teal text-exec-navy px-5 py-2 rounded-lg text-xs font-bold transition shadow-sm whitespace-nowrap hover:opacity-90">
+            Export Brief
+        </button>
+    </nav>
+
+    <div id="capture-area" class="blueprint-grid min-h-screen">
+        
+        <!-- STRATEGIC USE PAGE (NEW) -->
+        <div id="pillar-exec-use" class="tab-content active p-6 lg:p-20">
+            <div class="max-w-4xl mx-auto">
+                <header class="mb-16">
+                    <span class="bg-exec-navy text-exec-teal px-4 py-1 rounded text-[10px] font-black uppercase mb-6 inline-block tracking-[0.2em]">Operational Directive</span>
+                    <h1 class="text-6xl lg:text-7xl font-black mb-8 leading-[0.9] tracking-tighter text-exec-navy">Executive Use: The <br><span class="text-exec-teal italic">Implementation Guide.</span></h1>
+                    <p class="text-2xl text-slate-600 italic border-l-8 border-exec-blue pl-8 font-serif">
+                        "This volume is a structural schematic for the modern enterprise. It is designed to be utilized, not just read."
+                    </p>
+                </header>
+
+                <div class="grid md:grid-cols-2 gap-12 mb-20">
+                    <div class="card sidebar-accent">
+                        <h3 class="text-xl font-black uppercase text-exec-blue mb-4 tracking-widest">Who This Volume Is For</h3>
+                        <p class="text-slate-600 leading-relaxed mb-6">
+                            This manual is engineered for the architects of institutional health: Board Members, C-Suite Executives (CHRO, COO, CEO), and Senior People Leaders responsible for managing systemic risk and human sustainability.
+                        </p>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            <p class="text-[10px] font-bold uppercase text-slate-400 mb-2">Target Role</p>
+                            <p class="font-bold text-exec-navy">The Fiduciary Steward of Talent</p>
+                        </div>
+                    </div>
+
+                    <div class="card border-exec-teal/30">
+                        <h3 class="text-xl font-black uppercase text-exec-teal mb-4 tracking-widest">How Leaders Should Read It</h3>
+                        <p class="text-slate-600 leading-relaxed mb-6">
+                            Read this as a technical diagnostic. Begin with the **Introduction** to understand the high-stakes cost of performance masking. Then, proceed through the **Diagnostic Phase** (Pillars 1 to 3) to identify institutional leaks before moving to the **Recalibration Phase** (Pillars 4 to 6).
+                        </p>
+                        <div class="bg-exec-teal/10 p-4 rounded-xl border border-exec-teal/20">
+                            <p class="text-[10px] font-bold uppercase text-exec-teal mb-2">Reading Protocol</p>
+                            <p class="font-bold text-exec-navy italic">Diagnostic first; Design second.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-exec-navy text-white rounded-[3rem] p-12 lg:p-20 shadow-2xl relative overflow-hidden">
+                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
+                    <div class="relative z-10">
+                        <h2 class="text-3xl lg:text-4xl font-black mb-12 text-center">Institutional Implementation</h2>
+                        <div class="grid lg:grid-cols-3 gap-8">
+                            <div class="space-y-4">
+                                <h4 class="text-exec-teal font-black uppercase text-xs tracking-widest">Strategy Sessions</h4>
+                                <p class="text-sm opacity-80 leading-relaxed">Utilize the interactive charts as live data benchmarks to facilitate truth-telling regarding team capacity and "masking debt."</p>
+                            </div>
+                            <div class="space-y-4">
+                                <h4 class="text-exec-teal font-black uppercase text-xs tracking-widest">Leadership Retreats</h4>
+                                <p class="text-sm opacity-80 leading-relaxed">Use the "Diagnostic Reflections" at the end of each pillar as high-stakes breakout session prompts for senior management.</p>
+                            </div>
+                            <div class="space-y-4">
+                                <h4 class="text-exec-teal font-black uppercase text-xs tracking-widest">Succession Planning</h4>
+                                <p class="text-sm opacity-80 leading-relaxed">Execute the "Junior Cliff" analysis in Pillar 6 to audit your emerging leadership pipeline against the risks of total automation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INTRO SECTION -->
+        <div id="pillar-intro" class="tab-content p-6 lg:p-20">
+            <div class="max-w-4xl mx-auto">
+                <header class="mb-16">
+                    <span class="bg-exec-steel text-exec-blue px-3 py-1 rounded text-[10px] font-black uppercase mb-6 inline-block tracking-widest">Executive Preface</span>
+                    <h1 class="text-6xl lg:text-8xl font-black mb-8 leading-[0.8] tracking-tighter text-exec-navy">The Performance of <br><span class="text-exec-teal">Certainty.</span></h1>
+                    <p class="text-2xl text-slate-600 italic border-l-8 border-exec-teal pl-8 font-serif">"Survival is not leadership. The gap between those two things is costing organizations more than they have ever been willing to measure."</p>
+                </header>
+                <div class="prose-text space-y-8 mb-12">
+                    <p>There is a meeting happening right now in an organization near you. The room is polished, the slides are green. The executive presenting has rehearsed this performance so many times that the mask fits like a second skin. They perform measured confidence, strategic optimism, and a fluency in metrics selected specifically because they do not tell the whole story.</p>
+                    <p>Somewhere in that room, a mid-level manager knows what the real numbers are. They drafted a version of this presentation that told the truth, but they revised it four times before sending it upward. By the time it reached the room, it was unrecognizable. No one is lying, exactly, they are all just surviving.</p>
+                    <p>This book exists because we must transition from the performance of certainty to the architecture of truth.</p>
+                </div>
+                <div class="card bg-exec-navy text-white">
+                    <h3 class="text-2xl font-bold mb-4 text-exec-teal italic">The Vertical Posture ROI</h3>
+                    <p class="mb-8 opacity-80">Institutional Verticality is the alignment of official policy with operational reality. When this alignment occurs, performance velocity increases by 30%.</p>
+                    <div id="introPlot" class="w-full h-64"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PILLAR 01: UNCOVER -->
+        <div id="pillar-uncover" class="tab-content p-6 lg:p-20">
+            <div class="max-w-4xl mx-auto">
+                <header class="mb-16">
+                    <span class="bg-exec-steel text-exec-blue px-3 py-1 rounded text-[10px] font-black uppercase mb-6 inline-block">The Diagnostic</span>
+                    <h1 class="text-6xl lg:text-8xl font-black mb-8 leading-[0.8] tracking-tighter text-exec-navy">Uncover: The Leadership <br><span class="text-exec-teal">Masking Index™.</span></h1>
+                    <p class="text-2xl text-slate-600 italic border-l-8 border-exec-teal pl-8 font-serif">"You cannot manage what you refuse to measure. Traditional surveys measure satisfaction; the LMI measures structural coherence."</p>
+                </header>
+                <div class="prose-text space-y-8 mb-12">
+                    <p>The Leadership Masking Index (LMI) is our proprietary 36-question instrument designed to quantify the 'Masking Debt' within your organization. We measure the gap between the internal identity of the leader and the external persona required by the corporate culture.</p>
+                    <p>Statistical correlations show that exhausted managers are 1.8 times more likely to leave, but cynical managers, those who have fully adopted the mask as a survival mechanism, are 3.0 times more likely to exit. This is a fiscal liability that traditional balance sheets ignore.</p>
+                </div>
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div class="card sidebar-accent">
+                        <h3 class="text-xl font-bold mb-6">Turnover Velocity Correlation</h3>
+                        <div class="chart-container"><canvas id="pillar1Chart"></canvas></div>
+                    </div>
+                    <div class="bg-exec-navy text-white p-8 rounded-2xl">
+                        <h4 class="text-lg font-bold mb-4 text-exec-teal">The Corporate Crooked Room</h4>
+                        <p class="text-sm opacity-80 mb-6">We apply the 'Crooked Room' diagnostic to institutional policy. Are your employees contorting their values to fit tilted environments? This contortion represents uncaptured cognitive load.</p>
+                        <div class="p-4 bg-white/5 border border-white/10 rounded-lg">
+                            <p class="text-xs font-black uppercase text-exec-teal mb-1">Fiscal Impact</p>
+                            <p class="text-2xl font-black">$1.2M - $5M</p>
+                            <p class="text-[10px] opacity-60">Estimated annual debt for a 500-person organization.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PILLAR 02: NAVIGATE -->
+        <div id="pillar-navigate" class="tab-content p-6 lg:p-20">
+            <div class="max-w-4xl mx-auto">
+                <header class="mb-16">
+                    <span class="bg-exec-steel text-exec-blue px-3 py-1 rounded text-[10px] font-black uppercase mb-6 inline-block">Data Integrity</span>
+                    <h1 class="text-6xl lg:text-8xl font-black mb-8 leading-[0.8] tracking-tighter text-exec-navy">Navigate: Breaking <br><span class="text-exec-teal">Structural Secrecy.</span></h1>
+                    <p class="text-2xl text-slate-600 italic border-l-8 border-exec-teal pl-8 font-serif">"Information asymmetry isn't a glitch, it's a structural filter. When truth is reputationally dangerous, reporting becomes performance."</p>
+                </header>
+                <div class="prose-text space-y-8 mb-12">
+                    <p>Diane Vaughan defined 'Structural Secrecy' as the way organizational hierarchy prevents information from reaching those who need it. In masking cultures, we see the 'MUM Effect' where individuals avoid sharing bad news to protect their status.</p>
+                    <p>To navigate this, we implement Radical Subjectivity as a corporate standard. We ensure that operational signals survive the journey from the frontline to the boardroom without tactical sanitization.</p>
+                </div>
+                <div class="card">
+                    <div class="chart-container"><canvas id="pillar2Chart"></canvas></div>
+                    <p class="text-center text-xs text-slate-400 mt-4">Psychological Safety vs. Risk Identification Accuracy</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PILLAR 03: MANAGE -->
+        <div id="pillar-manage" class="tab-content p-6 lg:p-20">
+            <div class="max-w-4xl mx-auto">
+                <header class="mb-16">
+                    <span class="bg-exec-steel text-exec-blue px-3 py-1 rounded text-[10px] font-black uppercase mb-6 inline-block">Economic Risk</span>
+                    <h1 class="text-6xl lg:text-8xl font-black mb-8 leading-[0.8] tracking-tighter text-exec-navy">Manage: The AI-Driven <br><span class="text-exec-teal">Strain Transfer.</span></h1>
+                    <p class="text-2xl text-slate-600 italic border-l-8 border-exec-teal pl-8 font-serif">"AI makes burnout ambient. Flattened structures often hide a massive transfer of labor strain onto the bodies of leaders."</p>
+                </header>
+                <div class="prose-text space-y-8 mb-12">
+                    <p>March 2026 data shows that high-performers managing AI agents report a 33% increase in decision fatigue. We are currently subsidizing technological efficiency with human mental health. This is the 'Hidden Strain Transfer' where organizations remove administrative support but increase output expectations.</p>
+                </div>
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 card">
+                        <div id="pillar3Plot" class="w-full h-80"></div>
+                    </div>
+                    <div class="bg-exec-navy text-white p-8 rounded-2xl flex flex-col justify-center">
+                        <h4 class="text-xl font-bold mb-4 text-exec-teal italic">#AIBrainFry Diagnostic</h4>
+                        <p class="text-sm opacity-80 mb-6">Are you measuring the cognitive cost of auditing 'workslop'? If not, your efficiency metrics are fraudulent.</p>
+                        <div class="btn-exec text-center cursor-pointer">Audit Strain Now</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PILLAR 04: ADVOCATE -->
+        <div id="pillar-advocate" class="tab-content p-6 lg:p-20">
+            <div class="max-w-4xl mx-auto">
+                <header class="mb-16">
+                    <span class="bg-exec-steel text-exec-blue px-3 py-1 rounded text-[10px] font-black uppercase mb-6 inline-block">Structural Advocacy</span>
+                    <h1 class="text-6xl lg:text-8xl font-black mb-8 leading-[0.8] tracking-tighter text-exec-navy">Advocate: Decision <br><span class="text-exec-teal">Rights Realignment.</span></h1>
+                    <p class="text-2xl text-slate-600 italic border-l-8 border-exec-teal pl-8 font-serif">"Responsibility without authority is institutional gaslighting. Real advocacy realigns the decision rights with the accountable party."</p>
+                </header>
+                <div class="prose-text space-y-8 mb-12">
+                    <p>We utilize the RAPID® model to diagnose Authority-Responsibility Asymmetry. When a leader is penalized for fires they were denied the water to fight, the system is in structural debt. Verticality is only possible when authority is distributed as widely as accountability.</p>
+                </div>
+                <div class="card">
+                    <div class="chart-container"><canvas id="pillar4Chart"></canvas></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PILLAR 05: SUSTAIN -->
+        <div id="pillar-sustain" class="tab-content p-6 lg:p-20">
+            <div class="max-w-4xl mx-auto">
+                <header class="mb-16">
+                    <span class="bg-exec-steel text-exec-blue px-3 py-1 rounded text-[10px] font-black uppercase mb-6 inline-block">Healing as Policy</span>
+                    <h1 class="text-6xl lg:text-8xl font-black mb-8 leading-[0.8] tracking-tighter text-exec-navy">Sustain: Institutional <br><span class="text-exec-teal">Recalibration.</span></h1>
+                    <p class="text-2xl text-slate-600 italic border-l-8 border-exec-teal pl-8 font-serif">"Human judgment is a finite resource. Sustainability is the fiduciary standard of the modern enterprise."</p>
+                </header>
+                <div class="prose-text space-y-8 mb-12">
+                    <p>Applying Womanist Bioethics (Dr. Emilie Townes) to corporate policy means centering the healing of the body, mind, and soul. We move the burden of transformation off the backs of individuals and into the architecture of the organization. Healing is not a wellness perk, it is a hard-coded feature of a 100-year legacy.</p>
+                </div>
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div class="card sidebar-accent">
+                        <h3 class="text-xl font-bold mb-6 italic">Sustainability Matrix</h3>
+                        <div class="chart-container"><canvas id="pillar5Chart"></canvas></div>
+                    </div>
+                    <div class="bg-exec-navy text-white p-8 rounded-2xl">
+                        <h4 class="text-lg font-bold mb-4 text-exec-teal">Design Standards</h4>
+                        <ul class="space-y-4 text-sm opacity-90">
+                            <li><strong>Safety:</strong> Truth-telling without reputation risk.</li>
+                            <li><strong>Choice:</strong> High authority over pace and recovery.</li>
+                            <li><strong>Collaboration:</strong> Orchestration over control.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PILLAR 06: KINDLE -->
+        <div id="pillar-kindle" class="tab-content p-6 lg:p-20">
+            <div class="max-w-4xl mx-auto">
+                <header class="mb-16">
+                    <span class="bg-exec-steel text-exec-blue px-3 py-1 rounded text-[10px] font-black uppercase mb-6 inline-block">Succession Integrity</span>
+                    <h1 class="text-6xl lg:text-8xl font-black mb-8 leading-[0.8] tracking-tighter text-exec-navy">Kindle: Rebuilding the <br><span class="text-exec-teal">Junior Cliff.</span></h1>
+                    <p class="text-2xl text-slate-600 italic border-l-8 border-exec-teal pl-8 font-serif">"Automating entry-level roles removes the practice field where future leaders learn judgment, timing, and discernment."</p>
+                </header>
+                <div class="prose-text space-y-8 mb-12">
+                    <p>The final move is to protect the leadership pipeline. By dismantling the 'Junior Cliff' and reclaiming 'judgment reps' for emerging leaders, we ensure institutional longevity. Presence is always greater than performance. When you stand upright, you provide the horizon for the next generation to follow.</p>
+                </div>
+                <div class="card mb-12">
+                    <div id="pillar6Plot" class="w-full h-80"></div>
+                </div>
+                <div class="text-center py-20 bg-exec-teal text-exec-navy rounded-[3rem] shadow-2xl">
+                    <h3 class="text-4xl font-black mb-6 italic">Verticality is a Fiduciary Standard.</h3>
+                    <p class="text-lg font-bold uppercase tracking-widest opacity-60 mb-10">You are ready for the audit.</p>
+                    <div class="inline-block px-12 py-5 bg-exec-navy text-white rounded-full font-black uppercase tracking-widest cursor-pointer shadow-xl">Initiate Recruitment</div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="bg-exec-navy py-20 px-6 text-white text-center">
+            <div class="max-w-4xl mx-auto">
+                <div class="logo-block mb-6 uppercase">UNMASK</div>
+                <p class="text-exec-teal uppercase tracking-[0.4em] text-[10px] font-black">© 2026 Nikki Cates Miller | Strategic Transformations</p>
+                <p class="text-white/40 text-xs mt-6 font-sans uppercase tracking-widest">Womanist Bioethics (Dr. Emilie Townes) & Structural Secrecy (Diane Vaughan)</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function showPillar(pillar) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active-nav'));
+            document.getElementById('pillar-' + pillar).classList.add('active');
+            document.getElementById('nav-' + pillar).classList.add('active-nav');
+            window.scrollTo(0, 0);
+            initCharts(pillar);
+        }
+
+        function initCharts(pillar) {
+            const ctx1 = document.getElementById('pillar1Chart');
+            if (ctx1 && pillar === 'uncover') {
+                new Chart(ctx1, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Satisfied', 'Exhausted (1.8x)', 'Cynical (3.0x)'],
+                        datasets: [{ data: [1, 1.8, 3.0], backgroundColor: ['#58BBC2', '#123D72', '#F43F5E'], borderRadius: 6 }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+                });
+            }
+
+            const ctx2 = document.getElementById('pillar2Chart');
+            if (ctx2 && pillar === 'navigate') {
+                new Chart(ctx2, {
+                    type: 'line',
+                    data: {
+                        labels: [0, 20, 40, 60, 80, 100],
+                        datasets: [{ label: 'Risk Accuracy (%)', data: [10, 25, 45, 70, 92, 98], borderColor: '#58BBC2', tension: 0.4 }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, scales: { x: { title: { display: true, text: 'Psychological Safety Score' } } } }
+                });
+            }
+
+            if (pillar === 'manage') {
+                Plotly.newPlot('pillar3Plot', [{
+                    x: ['Q1', 'Q2', 'Q3', 'Q4'], y: [20, 55, 85, 98], mode: 'lines+markers', name: 'Ambient Strain', line: { color: '#F43F5E' }
+                }, {
+                    x: ['Q1', 'Q2', 'Q3', 'Q4'], y: [95, 80, 40, 15], mode: 'lines+markers', name: 'Judgment Capacity', line: { color: '#58BBC2' }
+                }], { margin: { l: 40, r: 20, t: 20, b: 40 }, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)' });
+            }
+
+            const ctx4 = document.getElementById('pillar4Chart');
+            if (ctx4 && pillar === 'advocate') {
+                new Chart(ctx4, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Accountability', 'Authority', 'Budget', 'Resources', 'Time'],
+                        datasets: [{ label: 'Legacy Model', data: [95, 20, 15, 30, 10], borderColor: '#F43F5E', backgroundColor: 'rgba(244,63,94,0.1)' },
+                                   { label: 'Vertical Model', data: [95, 92, 90, 95, 85], borderColor: '#58BBC2', backgroundColor: 'rgba(88,187,194,0.1)' }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false }
+                });
+            }
+
+            const ctx5 = document.getElementById('pillar5Chart');
+            if (ctx5 && pillar === 'sustain') {
+                new Chart(ctx5, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Body', 'Mind', 'Soul'],
+                        datasets: [{ data: [33, 33, 34], backgroundColor: ['#0B1530', '#123D72', '#58BBC2'] }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, cutout: '75%' }
+                });
+            }
+
+            if (pillar === 'kindle') {
+                Plotly.newPlot('pillar6Plot', [{
+                    x: [1, 5, 10, 20], y: [100, 45, 15, 5], name: 'Human Pipeline', type: 'bar', marker: { color: '#58BBC2' }
+                }, {
+                    x: [1, 5, 10, 20], y: [10, 50, 85, 100], name: 'Atrophy Risk', type: 'line', line: { color: '#F43F5E', width: 4 }
+                }], { margin: { l: 40, r: 20, t: 20, b: 40 }, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)' });
+            }
+        }
+
+        // Intro Plot
+        Plotly.newPlot('introPlot', [{
+            x: ['Performance Mask', 'Vertical Posture'], y: [45, 95], type: 'bar', marker: { color: ['#F43F5E', '#58BBC2'] }
+        }], { margin: { l: 40, r: 20, t: 20, b: 40 }, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', font: { color: 'white' } });
+
+        // Export Functionality
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            const btn = document.getElementById('downloadBtn');
+            btn.innerText = 'Processing...';
+            html2canvas(document.querySelector("#capture-area"), { scale: 2, useCORS: true, backgroundColor: "#F8FAFC" }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'UNMASK-at-Work-Master-Edition.png';
+                link.href = canvas.toDataURL();
+                link.click();
+                btn.innerText = 'Export Brief';
+            });
+        });
+
+        // Start
+        showPillar('exec-use');
+    </script>
+</body>
+</html>

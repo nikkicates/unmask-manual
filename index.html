@@ -60,7 +60,7 @@
             box-shadow: 0 10px 30px -10px rgba(11, 21, 48, 0.08);
         }
 
-        /* The Standardized Navy/Teal CTA Card for Uniformity */
+        /* Standardized Navy/Teal CTA Card for Uniformity */
         .pillar-cta-card {
             background: var(--exec-navy);
             border-radius: 2rem;
@@ -112,7 +112,7 @@
 </head>
 <body class="antialiased">
 
-    <!-- TOP NAVIGATION -->
+    <!-- NAVIGATION -->
     <nav style="background:rgba(255,255,255,0.97); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);" class="sticky top-0 z-50 border-b border-slate-200 px-6 py-3 flex flex-col lg:flex-row justify-between items-center gap-3 relative" data-html2canvas-ignore="true">
         <div class="flex items-center gap-4 shrink-0">
             <div class="nav-title flex flex-col leading-tight">
@@ -165,8 +165,8 @@
                     </div>
 
                     <div class="card flex flex-col justify-center items-center text-center">
-                        <h3 class="text-sm font-black uppercase text-exec-blue mb-2 tracking-wider">Start with the Math</h3>
-                        <p class="text-sm text-slate-600 mb-6">Visualize the literal hours and payroll dollars lost to systemic theater using the ROI Engine.</p>
+                        <h3 class="text-sm font-black uppercase text-exec-blue mb-2 tracking-wider">Start with ROI</h3>
+                        <p class="text-sm text-slate-600 mb-6 leading-relaxed">Visualize the literal hours and payroll dollars lost to systemic theater using the ROI Engine.</p>
                         <button onclick="showPillar('simulator')" class="btn-exec w-full" style="background:var(--exec-blue); color:white !important;">Launch ROI Engine</button>
                     </div>
                 </div>
@@ -179,7 +179,7 @@
             </div>
         </div>
 
-        <!-- ROI ENGINE (Whitespace/Gap Fixed) -->
+        <!-- ROI ENGINE -->
         <div id="pillar-simulator" class="tab-content p-6 lg:p-10">
             <div class="max-w-5xl mx-auto">
                 <header class="mb-10 text-center">
@@ -187,9 +187,9 @@
                     <h2 class="text-5xl font-black text-exec-navy mb-4 leading-tight tracking-tighter">Measure Your Reclaimed Capacity</h2>
                 </header>
 
-                <div class="grid lg:grid-cols-12 gap-8 items-start">
+                <div class="grid lg:grid-cols-12 gap-8 items-stretch">
                     <div class="lg:col-span-5 flex flex-col gap-6">
-                        <div class="card bg-slate-50 p-8 shadow-sm">
+                        <div class="card bg-slate-50 flex-grow p-8">
                             <h3 class="text-sm font-black text-exec-blue uppercase tracking-widest mb-6">1. Baseline Parameters</h3>
                             <div class="space-y-6">
                                 <div>
@@ -202,8 +202,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card border-exec-blue/20 p-8 shadow-sm">
-                            <h3 class="text-sm font-black text-exec-blue uppercase tracking-widest mb-6">2. Recalibration Targets</h3>
+                        <div class="card border-exec-blue/20 flex-grow p-8">
+                            <h3 class="text-sm font-black text-exec-blue uppercase tracking-widest mb-6">2. Targets</h3>
                             <div class="space-y-8">
                                 <div>
                                     <div class="flex justify-between mb-2 uppercase text-[9px] font-black tracking-widest text-slate-400">
@@ -223,26 +223,26 @@
                         </div>
                     </div>
 
-                    <div class="lg:col-span-7 h-full">
-                        <div class="card h-full flex flex-col justify-between overflow-hidden relative border-none shadow-2xl bg-[#0B1530] text-white p-10 lg:p-12">
+                    <div class="lg:col-span-7 flex flex-col">
+                        <div class="card h-full flex flex-col justify-between overflow-hidden relative border-none shadow-2xl bg-[#0B1530] text-white p-12">
                             <div class="absolute top-0 right-0 w-64 h-64 bg-exec-blue/10 rounded-full blur-[80px] -mr-32 -mt-32"></div>
                             <div class="relative z-10">
-                                <h3 class="text-3xl font-serif italic text-exec-steel mb-2">Synthesis ROI</h3>
-                                <p class="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-10 text-center sm:text-left">Predicted Organizational Reclaim</p>
+                                <h3 class="text-3xl font-serif italic text-exec-steel mb-2">Synthesis Impact</h3>
+                                <p class="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-10 text-center sm:text-left">Calculated Annual Potential</p>
 
-                                <div class="grid sm:grid-cols-2 gap-8 mb-10">
-                                    <div class="bg-white/5 p-6 rounded-2xl border border-white/10">
-                                        <p class="text-[9px] font-black text-exec-steel uppercase tracking-widest mb-2">Focus Reclaim</p>
-                                        <div class="text-5xl font-black tracking-tighter leading-none"><span id="res-hours">70</span> <span class="text-lg text-white/30 font-normal">hrs/wk</span></div>
+                                <div class="grid sm:grid-cols-2 gap-8 mb-12">
+                                    <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
+                                        <p class="text-[9px] font-black text-exec-steel uppercase tracking-widest mb-4">Focus Reclaim</p>
+                                        <div class="text-5xl font-black tracking-tighter mb-1 leading-none"><span id="res-hours">70</span> <span class="text-lg text-white/30 font-normal">hrs/wk</span></div>
                                     </div>
-                                    <div class="bg-white/5 p-6 rounded-2xl border border-white/10">
-                                        <p class="text-[9px] font-black text-exec-steel uppercase tracking-widest mb-2">Fiscal Return</p>
-                                        <div class="text-5xl font-black tracking-tighter leading-none">$<span id="res-fiscal">108.5</span>k</div>
+                                    <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
+                                        <p class="text-[9px] font-black text-exec-steel uppercase tracking-widest mb-4">Fiscal Return</p>
+                                        <div class="text-5xl font-black tracking-tighter mb-1 leading-none">$<span id="res-fiscal">108.5</span>k</div>
                                     </div>
                                 </div>
 
-                                <div class="bg-exec-blue/40 p-8 rounded-[2.5rem] border border-white/10 text-center">
-                                    <p class="text-lg font-serif italic mb-8 leading-relaxed">"Recalibration doesn't hire new people; it unleashes the ones you already have."</p>
+                                <div class="bg-exec-blue/40 p-10 rounded-[2.5rem] border border-white/10 text-center">
+                                    <p class="text-xl font-serif italic mb-8 leading-relaxed">"Recalibration doesn't hire new people; it unleashes the ones you already have."</p>
                                     <a href="https://stan.store/nikkicates/p/the-unmask-org-readiness-pack" target="_blank" class="btn-exec w-full">Unlock Certified Engine ($297)</a>
                                 </div>
                             </div>
@@ -252,7 +252,7 @@
             </div>
         </div>
 
-        <!-- PILLARS (Uniformly Styled) -->
+        <!-- PILLAR 01 -->
         <div id="pillar-uncover" class="tab-content p-6 lg:p-10">
             <div class="max-w-4xl mx-auto text-left">
                 <header class="mb-10">
@@ -272,6 +272,7 @@
             </div>
         </div>
 
+        <!-- PILLAR 02 -->
         <div id="pillar-navigate" class="tab-content p-6 lg:p-10">
             <div class="max-w-4xl mx-auto text-left">
                 <header class="mb-10">
@@ -281,7 +282,7 @@
                 <div class="grid md:grid-cols-2 gap-8">
                     <div class="card border-l-8 border-exec-blue h-full flex flex-col justify-center">
                         <h4 class="text-sm font-black text-exec-blue uppercase tracking-wider mb-3">Official vs. Actual</h4>
-                        <p class="text-sm text-slate-600 leading-relaxed italic">The unwritten rules dictated by structural secrecy determine your actual velocity.</p>
+                        <p class="text-sm text-slate-600 leading-relaxed italic text-left">The unwritten rules dictated by structural secrecy determine your actual velocity.</p>
                     </div>
                     <div class="card h-full flex flex-col justify-center">
                         <h4 class="text-sm font-black text-exec-navy uppercase tracking-wider mb-4 text-left">Terrain Markers</h4>
@@ -300,6 +301,7 @@
             </div>
         </div>
 
+        <!-- PILLAR 03 -->
         <div id="pillar-manage" class="tab-content p-6 lg:p-10">
             <div class="max-w-4xl mx-auto text-center lg:text-left">
                 <header class="mb-10">
@@ -318,6 +320,7 @@
             </div>
         </div>
 
+        <!-- PILLAR 04 -->
         <div id="pillar-advocate" class="tab-content p-6 lg:p-10">
             <div class="max-w-4xl mx-auto text-left">
                 <header class="mb-10">
@@ -343,6 +346,7 @@
             </div>
         </div>
 
+        <!-- PILLAR 05 -->
         <div id="pillar-sustain" class="tab-content p-6 lg:p-10">
             <div class="max-w-4xl mx-auto text-center lg:text-left">
                 <header class="mb-10">
@@ -361,6 +365,7 @@
             </div>
         </div>
 
+        <!-- PILLAR 06 -->
         <div id="pillar-kindle" class="tab-content p-6 lg:p-10">
             <div class="max-w-4xl mx-auto text-left">
                 <header class="mb-10 text-center lg:text-left">
@@ -387,9 +392,9 @@
                 <div class="card border-none shadow-none text-left mb-12 max-w-2xl mx-auto bg-slate-50 p-12 rounded-[3rem]">
                     <p class="text-2xl font-serif italic text-slate-500 mb-10 leading-relaxed text-left">"You now have the blueprint. Your next act is to protect the development of your team by redesigning the systems that inhibit them."</p>
                     <div class="flex items-center gap-5 border-t pt-8 border-slate-200">
-                        <!-- Headshot Integration -->
+                        <!-- Headshot Integration with Space-Safe URL -->
                         <div class="h-20 w-20 bg-slate-200 rounded-full shadow-lg overflow-hidden border-2 border-white">
-                            <img src="Boss Vibez.jpg" 
+                            <img src="Boss%20Vibez.jpg" 
                                  alt="Nikki Cates" 
                                  class="h-full w-full object-cover" 
                                  onerror="this.parentElement.style.backgroundColor='#0B1530'"/>
@@ -404,8 +409,8 @@
                     <a href="https://stan.store/nikkicates/p/the-unmask-org-readiness-pack" target="_blank" class="btn-exec" style="background:var(--exec-navy); color:white !important; padding:1.25rem;">Unlock Diagnostic Engine ($297)</a>
                     <a href="https://calendar.app.google/s18dHSNbE8tBj1eEA" target="_blank" class="btn-exec" style="padding:1.25rem; background: var(--exec-teal); color: var(--exec-navy) !important;">Schedule Roadmap Session</a>
                 </div>
-                <!-- Darkened, High-Contrast Ebook link -->
-                <a href="https://drive.google.com/file/d/11HT8uCavHXZhbRQCM6LDgVGY4tpCvSE9/view?usp=drive_link" target="_blank" class="text-xs font-black text-exec-navy uppercase tracking-[0.4em] hover:text-exec-teal transition-colors underline underline-offset-[12px] decoration-exec-navy decoration-[3px]">Return to Ebook Technical Edition</a>
+                <!-- HIGH CONTRAST DARKENED EBOOK LINK -->
+                <a href="https://drive.google.com/file/d/11HT8uCavHXZhbRQCM6LDgVGY4tpCvSE9/view?usp=drive_link" target="_blank" class="text-xs font-black text-exec-navy uppercase tracking-[0.4em] hover:text-exec-teal transition-colors underline underline-offset-[12px] decoration-exec-navy decoration-2">Return to Ebook Technical Edition</a>
             </div>
         </div>
 
@@ -478,11 +483,11 @@
 
         function initKindleChart() {
             Plotly.newPlot('pillar6Plot', [{
-                x: ['Entry', 'Manager', 'Director', 'VP', 'C-Suite'],
+                x: ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'],
                 y: [100, 85, 40, 20, 5],
                 name: 'Judgment Readiness', type: 'bar', marker: { color: '#123D72' }
             }, {
-                x: ['Entry', 'Manager', 'Director', 'VP', 'C-Suite'],
+                x: ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'],
                 y: [5, 20, 65, 85, 100],
                 name: 'Automation Reliance', type: 'scatter', mode: 'lines+markers', line: { color: '#F43F5E', width: 3 }
             }], {

@@ -16,7 +16,6 @@
             --exec-teal: #58BBC2;
             --exec-ink: #121721;
             --exec-steel: #DDE6EF;
-            --rose-danger: #F43F5E;
         }
 
         body {
@@ -43,7 +42,7 @@
             white-space: nowrap;
         }
         .active-nav {
-            border-bottom: 3px solid var(--exec-teal);
+            border-bottom: 3px solid var(--exec-blue);
             color: var(--exec-navy) !important;
             font-weight: 900;
         }
@@ -59,28 +58,39 @@
             padding: 2rem;
             box-shadow: 0 10px 30px -10px rgba(11, 21, 48, 0.08);
         }
-        .sidebar-accent { border-left: 8px solid var(--exec-blue); }
+
+        /* Uniform Navy/Teal CTA Card */
+        .pillar-cta-card {
+            background: var(--exec-navy);
+            border-radius: 2rem;
+            padding: 3.5rem;
+            text-align: center;
+            color: white;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            margin-top: 3rem;
+        }
 
         .btn-exec {
-            background: var(--exec-navy);
-            color: white !important;
-            padding: 0.65rem 1.4rem;
-            border-radius: 0.5rem;
-            font-weight: 800;
+            background: var(--exec-teal);
+            color: var(--exec-navy) !important;
+            padding: 1.1rem 2.5rem;
+            border-radius: 0.75rem;
+            font-weight: 900;
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
             display: inline-block;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            font-size: 0.75rem;
             text-decoration: none;
             line-height: 1.4;
+            text-align: center;
         }
         .btn-exec:hover {
-            background: var(--exec-blue);
-            transform: translateY(-1px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+            box-shadow: 0 10px 20px rgba(88, 187, 194, 0.4);
         }
 
         .prose-text { font-size: 1.1rem; line-height: 1.7; color: var(--exec-navy); }
@@ -93,132 +103,118 @@
             nav { padding: 0.5rem 1rem !important; flex-wrap: nowrap; overflow-x: auto; }
             .nav-title span:last-child { display: none; }
             h1.hero { font-size: 2.2rem !important; }
-            .text-5xl { font-size: 2.2rem !important; }
-            .btn-exec { width: 100%; text-align: center; }
-            .cta-flex { flex-direction: column !important; }
+            .text-5xl { font-size: 2.5rem !important; }
+            .pillar-cta-card { padding: 2.5rem 1.5rem; }
+            .btn-exec { width: 100%; }
         }
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- TOP NAVIGATION -->
+    <!-- NAVIGATION -->
     <nav style="background:rgba(255,255,255,0.97); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);" class="sticky top-0 z-50 border-b border-slate-200 px-6 py-3 flex flex-col lg:flex-row justify-between items-center gap-3 relative" data-html2canvas-ignore="true">
         <div class="flex items-center gap-4 shrink-0">
             <div class="nav-title flex flex-col leading-tight">
                 <span class="text-exec-navy uppercase font-black text-sm tracking-tight">The UNMASK Blueprint<sup style="font-size:0.5em;vertical-align:super;line-height:0;font-weight:900;">™</sup></span>
-                <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider hidden sm:block">Volume 2: Master Manual</span>
+                <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider hidden sm:block">Volume 2 Interactive Toolkit</span>
             </div>
         </div>
 
         <div id="nav-scroll-container" class="flex gap-1 md:gap-3 overflow-x-auto w-full lg:w-auto pb-1 lg:pb-0 text-[10px] font-black uppercase tracking-widest text-slate-400 no-scrollbar items-center">
-            <button onclick="showPillar('exec-use')" id="nav-exec-use" class="nav-btn py-1 px-2 active-nav">Strategic Use</button>
-            <button onclick="showPillar('simulator')" id="nav-simulator" class="nav-btn py-1 px-2 text-exec-teal">ROI Simulator</button>
+            <button onclick="showPillar('exec-use')" id="nav-exec-use" class="nav-btn py-1 px-2 active-nav">Preface</button>
+            <button onclick="showPillar('simulator')" id="nav-simulator" class="nav-btn py-1 px-2 text-exec-blue font-bold">ROI Engine</button>
             <button onclick="showPillar('uncover')" id="nav-uncover" class="nav-btn py-1 px-2">01 Uncover</button>
             <button onclick="showPillar('navigate')" id="nav-navigate" class="nav-btn py-1 px-2">02 Navigate</button>
             <button onclick="showPillar('manage')" id="nav-manage" class="nav-btn py-1 px-2">03 Manage</button>
             <button onclick="showPillar('advocate')" id="nav-advocate" class="nav-btn py-1 px-2">04 Advocate</button>
             <button onclick="showPillar('sustain')" id="nav-sustain" class="nav-btn py-1 px-2">05 Sustain</button>
             <button onclick="showPillar('kindle')" id="nav-kindle" class="nav-btn py-1 px-2">06 Kindle</button>
-            <button onclick="showPillar('conclusion')" id="nav-conclusion" class="nav-btn py-1 px-2">Closing</button>
+            <button onclick="showPillar('conclusion')" id="nav-conclusion" class="nav-btn py-1 px-2 text-exec-blue">Closing</button>
         </div>
 
-        <button id="downloadBtn" class="shrink-0 bg-exec-teal text-exec-navy px-4 py-1.5 rounded-md text-[10px] font-black uppercase tracking-widest transition hover:brightness-95 shadow-sm whitespace-nowrap">
-            Export Brief
-        </button>
+        <div class="flex items-center gap-3">
+            <a href="https://drive.google.com/file/d/11HT8uCavHXZhbRQCM6LDgVGY4tpCvSE9/view?usp=drive_link" target="_blank" class="text-[9px] font-black uppercase tracking-widest text-exec-blue border border-exec-blue/20 px-2 py-1 rounded hover:bg-exec-blue hover:text-white transition-all whitespace-nowrap">Ebook PDF</a>
+            <button id="downloadBtn" class="shrink-0 bg-exec-blue text-white px-4 py-1.5 rounded-md text-[10px] font-black uppercase tracking-widest transition hover:brightness-110 shadow-sm whitespace-nowrap">
+                Export Brief
+            </button>
+        </div>
     </nav>
 
-    <div id="capture-area" class="blueprint-grid">
+    <div id="capture-area" class="blueprint-grid min-h-screen">
 
-        <!-- ===================== SECTION: STRATEGIC USE ===================== -->
+        <!-- PREFACE -->
         <div id="pillar-exec-use" class="tab-content active p-6 lg:p-10">
             <div class="max-w-5xl mx-auto">
                 <header class="mb-10 text-center lg:text-left">
-                    <span class="text-exec-blue font-black text-[11px] uppercase tracking-[0.3em] mb-3 block">Institutional Directive</span>
+                    <span class="text-exec-blue font-black text-[11px] uppercase tracking-[0.3em] mb-3 block">Master Manual</span>
                     <h1 class="text-5xl lg:text-7xl font-black text-exec-navy leading-none tracking-tight mb-6">
-                        The Master Manual.<br>
-                        <span class="text-exec-teal italic font-serif">Redesigning Systems.</span>
+                        Systemic<br>
+                        <span class="text-exec-blue italic font-serif">Redesign.</span>
                     </h1>
-                    <p class="text-xl text-slate-500 italic border-l-4 border-exec-teal pl-6 font-serif max-w-2xl mx-auto lg:mx-0">
-                        &ldquo;A structural schematic for the modern enterprise. Engineered to be utilized, not just read.&rdquo;
+                    <p class="text-xl text-slate-500 italic border-l-4 border-exec-blue pl-6 font-serif max-w-2xl mx-auto lg:mx-0">
+                        &ldquo;A structural schematic for the modern enterprise. You are no longer managing symptoms; you are engineering stability.&rdquo;
                     </p>
                 </header>
 
-                <div class="grid md:grid-cols-2 gap-8 mb-10">
-                    <div class="card sidebar-accent py-8 px-10">
-                        <h3 class="text-sm font-black uppercase text-exec-blue mb-3 tracking-wider">The Fiduciary Duty</h3>
-                        <p class="text-sm text-slate-600 mb-4 leading-relaxed">This manual identifies the "Capacity Leaks" costing your organization 20-30% of its annual payroll. It is a technical companion to Volume 2.</p>
-                        <div style="background:#DDE6EF55; padding:0.75rem; border-radius:0.5rem; border:1px solid #DDE6EF;">
-                            <p class="text-[9px] font-bold text-exec-blue uppercase tracking-widest mb-1">Status</p>
-                            <p class="text-sm font-bold text-exec-navy italic">Implementation Mode</p>
-                        </div>
+                <div class="grid md:grid-cols-2 gap-8 mb-6">
+                    <div class="card border-l-8 border-exec-blue flex flex-col justify-center">
+                        <h3 class="text-sm font-black uppercase text-exec-blue mb-3 tracking-wider">Strategic Intent</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">This Master Manual provides the diagnostic scaffolding to ensure institutional demand never exceeds human capacity.</p>
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-4 italic">Volume 2 Technical Edition</p>
                     </div>
 
-                    <div class="card border-exec-teal/20 py-5 px-8">
-                        <h3 class="text-sm font-black uppercase text-exec-teal mb-2 tracking-wider">The Simulator</h3>
-                        <p class="text-sm text-slate-600 mb-3 leading-relaxed">Before applying recalibration, use the Simulator to calculate the specific ROI for your team size.</p>
-                        <button onclick="showPillar('simulator')" class="text-xs font-black text-exec-teal underline tracking-widest uppercase">Launch ROI Simulator</button>
+                    <div class="card flex flex-col justify-center items-center text-center">
+                        <h3 class="text-sm font-black uppercase text-exec-blue mb-2 tracking-wider">Start with the Math</h3>
+                        <p class="text-sm text-slate-600 mb-6">Visualize the literal hours and payroll dollars lost to systemic theater using the ROI Engine.</p>
+                        <button onclick="showPillar('simulator')" class="btn-exec w-full" style="background:var(--exec-blue); color:white !important;">Launch ROI Engine</button>
                     </div>
                 </div>
 
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="card py-6 px-7 border-dashed border-2">
-                        <p class="text-[9px] font-black text-exec-blue uppercase tracking-widest mb-2">Technical Goal</p>
-                        <h4 class="text-exec-navy font-black text-base mb-2">Measure the Mask</h4>
-                        <p class="text-xs text-slate-500 leading-relaxed">Identify identity debt that forces leaders to perform busywork instead of high-value work.</p>
-                    </div>
-                    <div class="card py-6 px-7 border-dashed border-2">
-                        <p class="text-[9px] font-black text-exec-blue uppercase tracking-widest mb-2">ROI Focus</p>
-                        <h4 class="text-exec-navy font-black text-base mb-2">Velocity Reclaim</h4>
-                        <p class="text-xs text-slate-500 leading-relaxed">Remove structural bottlenecks that block decision speed and burnout high-performers.</p>
-                    </div>
-                    <div class="card py-6 px-7 border-dashed border-2">
-                        <p class="text-[9px] font-black text-exec-blue uppercase tracking-widest mb-2">Automation</p>
-                        <h4 class="text-exec-navy font-black text-base mb-2">The Junior Cliff</h4>
-                        <p class="text-xs text-slate-500 leading-relaxed">Protect your pipeline from judgment atrophy caused by over-automation of junior roles.</p>
-                    </div>
+                <div class="pillar-cta-card">
+                    <h3 class="text-2xl font-serif italic mb-2">Measure the Hidden Gap</h3>
+                    <p class="text-sm text-white/50 mb-10 max-w-xl mx-auto">Theory is the map. Actual data is the GPS. Initiate your Certified Structural Audit to reveal your organization's truth.</p>
+                    <a href="https://stan.store/nikkicates/p/unmask-ai-structural-audit" target="_blank" class="btn-exec">Unlock Diagnostic Engine ($297)</a>
                 </div>
             </div>
         </div>
 
-        <!-- ===================== SECTION: SIMULATOR ===================== -->
+        <!-- ROI ENGINE (Whitespace Fixed) -->
         <div id="pillar-simulator" class="tab-content p-6 lg:p-10">
             <div class="max-w-5xl mx-auto">
                 <header class="mb-10 text-center">
-                    <span class="text-exec-teal font-black text-[11px] uppercase tracking-[0.4em] mb-3 block">Synthesis Simulator</span>
-                    <h2 class="text-5xl font-black text-exec-navy mb-4">The Recalibration ROI</h2>
-                    <p class="text-slate-500 font-serif italic text-lg">Calculate the capacity reclaimable through structural recalibration.</p>
+                    <span class="text-exec-blue font-black text-[11px] uppercase tracking-[0.4em] mb-3 block">Recalibration Logic</span>
+                    <h2 class="text-5xl font-black text-exec-navy mb-4 leading-tight tracking-tighter">Measure Your Reclaimed Capacity</h2>
                 </header>
 
-                <div class="grid lg:grid-cols-12 gap-10">
-                    <div class="lg:col-span-5 space-y-6">
-                        <div class="card bg-slate-50">
+                <div class="grid lg:grid-cols-12 gap-8 items-stretch">
+                    <div class="lg:col-span-5 flex flex-col gap-6">
+                        <div class="card bg-slate-50 flex-grow p-8">
                             <h3 class="text-sm font-black text-exec-blue uppercase tracking-widest mb-6">1. Baseline Parameters</h3>
                             <div class="space-y-6">
                                 <div>
-                                    <label class="text-[10px] font-black uppercase text-slate-500 tracking-widest block mb-2">Team Size (Leaders)</label>
-                                    <input type="number" id="sim-teamSize" value="10" oninput="runSimulation()" class="w-full bg-white border border-slate-200 rounded-lg p-3 text-lg font-mono outline-none focus:border-exec-teal" />
+                                    <label class="text-[10px] font-black uppercase text-slate-500 tracking-widest block mb-2">Number of Leaders</label>
+                                    <input type="number" id="sim-teamSize" value="10" oninput="runSimulation()" class="w-full bg-white border border-slate-200 rounded-lg p-3 text-lg font-mono outline-none focus:border-exec-blue" />
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black uppercase text-slate-500 tracking-widest block mb-2">Avg Annual Salary ($)</label>
-                                    <input type="number" id="sim-salary" value="125000" oninput="runSimulation()" class="w-full bg-white border border-slate-200 rounded-lg p-3 text-lg font-mono outline-none focus:border-exec-teal" />
+                                    <input type="number" id="sim-salary" value="125000" oninput="runSimulation()" class="w-full bg-white border border-slate-200 rounded-lg p-3 text-lg font-mono outline-none focus:border-exec-blue" />
                                 </div>
                             </div>
                         </div>
-
-                        <div class="card border-exec-teal/30">
-                            <h3 class="text-sm font-black text-exec-teal uppercase tracking-widest mb-6">2. Engineering Targets</h3>
+                        <div class="card border-exec-blue/20 flex-grow p-8">
+                            <h3 class="text-sm font-black text-exec-blue uppercase tracking-widest mb-6">2. Recalibration Targets</h3>
                             <div class="space-y-8">
                                 <div>
-                                    <div class="flex justify-between mb-2">
-                                        <label class="text-[10px] font-black uppercase text-slate-500 tracking-widest">Masking Reduction</label>
-                                        <span id="label-masking" class="text-sm font-black text-exec-navy font-mono">20%</span>
+                                    <div class="flex justify-between mb-2 uppercase text-[9px] font-black tracking-widest text-slate-400">
+                                        <span>Masking Reduction</span>
+                                        <span id="label-masking" class="text-exec-blue font-bold">20%</span>
                                     </div>
                                     <input type="range" id="sim-masking" min="0" max="50" step="5" value="20" oninput="runSimulation()" />
                                 </div>
                                 <div>
-                                    <div class="flex justify-between mb-2">
-                                        <label class="text-[10px] font-black uppercase text-slate-500 tracking-widest">Friction Reduction</label>
-                                        <span id="label-friction" class="text-sm font-black text-exec-navy font-mono">15%</span>
+                                    <div class="flex justify-between mb-2 uppercase text-[9px] font-black tracking-widest text-slate-400">
+                                        <span>Friction Reduction</span>
+                                        <span id="label-friction" class="text-exec-blue font-bold">15%</span>
                                     </div>
                                     <input type="range" id="sim-friction" min="0" max="50" step="5" value="15" oninput="runSimulation()" />
                                 </div>
@@ -227,29 +223,26 @@
                     </div>
 
                     <div class="lg:col-span-7">
-                        <div class="card h-full flex flex-col justify-between overflow-hidden relative border-none shadow-2xl bg-exec-navy text-white">
-                            <div class="absolute top-0 right-0 w-64 h-64 bg-exec-teal/10 rounded-full blur-[80px] -mr-32 -mt-32"></div>
-                            
-                            <div class="relative z-10 p-4">
-                                <h3 class="text-4xl font-serif italic text-exec-teal mb-2">Synthesis Impact</h3>
-                                <p class="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-10">Predicted Organizational Reclaim</p>
+                        <div class="card h-full flex flex-col justify-between overflow-hidden relative border-none shadow-2xl bg-[#0B1530] text-white p-12">
+                            <div class="absolute top-0 right-0 w-64 h-64 bg-exec-blue/10 rounded-full blur-[80px] -mr-32 -mt-32"></div>
+                            <div class="relative z-10">
+                                <h3 class="text-3xl font-serif italic text-exec-steel mb-2">Synthesis Impact</h3>
+                                <p class="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-10">Calculated Annual Potential</p>
 
-                                <div class="grid sm:grid-cols-2 gap-8 mb-12 text-center sm:text-left">
+                                <div class="grid sm:grid-cols-2 gap-8 mb-12">
                                     <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
-                                        <p class="text-[9px] font-black text-exec-teal uppercase tracking-widest mb-4">Capacity Returned</p>
-                                        <div class="text-5xl font-black tracking-tighter mb-1 leading-none"><span id="res-hours">70</span> <span class="text-lg text-white/30">hrs/wk</span></div>
-                                        <p class="text-[10px] text-white/40 italic mt-2">Collective focus time restored.</p>
+                                        <p class="text-[9px] font-black text-exec-steel uppercase tracking-widest mb-4">Focus Reclaim</p>
+                                        <div class="text-5xl font-black tracking-tighter mb-1 leading-none"><span id="res-hours">70</span> <span class="text-lg text-white/30 font-normal">hrs/wk</span></div>
                                     </div>
                                     <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
-                                        <p class="text-[9px] font-black text-exec-teal uppercase tracking-widest mb-4">Fiscal Efficiency</p>
+                                        <p class="text-[9px] font-black text-exec-steel uppercase tracking-widest mb-4">Fiscal Return</p>
                                         <div class="text-5xl font-black tracking-tighter mb-1 leading-none">$<span id="res-fiscal">108.5</span>k</div>
-                                        <p class="text-[10px] text-white/40 italic mt-2">Annual payroll redirected.</p>
                                     </div>
                                 </div>
 
-                                <div class="bg-exec-blue/40 p-8 rounded-[2rem] border border-exec-teal/20 text-center">
-                                    <p class="text-xl font-serif italic mb-6">"Structural recalibration doesn't hire new people; it unleashes the ones you already have."</p>
-                                    <a href="https://stan.store/nikkicates" target="_blank" class="btn-exec" style="background:var(--exec-teal); color:var(--exec-navy) !important; width:100%;">Unlock Full Implementation Toolkit ($297)</a>
+                                <div class="bg-exec-blue/40 p-10 rounded-[2.5rem] border border-white/10 text-center">
+                                    <p class="text-xl font-serif italic mb-8 leading-relaxed">"Recalibration doesn't hire new people; it unleashes the ones you already have."</p>
+                                    <a href="https://stan.store/nikkicates/p/unmask-ai-structural-audit" target="_blank" class="btn-exec w-full">Unlock Certified Engine ($297)</a>
                                 </div>
                             </div>
                         </div>
@@ -258,147 +251,158 @@
             </div>
         </div>
 
-        <!-- ===================== PILLAR 01: UNCOVER ===================== -->
+        <!-- PILLAR 01 -->
         <div id="pillar-uncover" class="tab-content p-6 lg:p-10">
             <div class="max-w-4xl mx-auto">
-                <header class="mb-8">
+                <header class="mb-10 text-center lg:text-left">
                     <span class="text-exec-blue font-black text-[11px] uppercase tracking-[0.3em] mb-3 block">Pillar 01</span>
-                    <h2 class="text-4xl font-black text-exec-navy mb-4 leading-tight">Uncover: The Debt.</h2>
-                    <p class="prose-text mb-8">Identify identity contortion. Every masked leader represents uncaptured cognitive load and fiscal liability.</p>
+                    <h2 class="text-4xl lg:text-6xl font-black text-exec-navy mb-4 tracking-tight leading-none">Uncover: The Debt.</h2>
+                    <p class="prose-text border-l-4 border-exec-blue pl-6 italic">Quantifying the identity contortion that costs your organization 20% in lost bandwidth.</p>
                 </header>
-
-                <div class="card sidebar-accent py-6 px-8 mb-8">
-                    <h3 class="text-sm font-black text-exec-blue mb-1 uppercase tracking-wider">Turnover Correlation</h3>
-                    <div class="h-56"><canvas id="pillar1Chart"></canvas></div>
-                    <p class="text-[9px] text-slate-400 mt-3 text-center uppercase font-bold tracking-widest">Cynical Managers are 3.0&times; more likely to exit</p>
+                <div class="card border-l-8 border-exec-blue py-10 mb-6 text-center">
+                    <h3 class="text-sm font-black text-exec-blue mb-8 uppercase tracking-wider">The Masking-Turnover Correlation</h3>
+                    <div class="h-64"><canvas id="pillar1Chart"></canvas></div>
                 </div>
-
-                <div class="mobile-pad" style="background:#0B1530; color:white; border-radius:1.5rem; padding:2rem 2.5rem; text-align:center;">
-                    <h3 class="text-xl font-serif italic text-exec-teal mb-4">Engineer the Unmasking</h3>
-                    <p class="text-sm text-white/60 mb-6">Transitioning from Performative Compliance to Verticality requires a structural baseline.</p>
-                    <button onclick="showPillar('simulator')" class="btn-exec" style="background:#58BBC2; color:#0B1530 !important;">Calculate Potential Reclaim</button>
+                <div class="pillar-cta-card">
+                    <h3 class="text-2xl font-serif italic mb-2">Quantify Your Strain</h3>
+                    <p class="text-sm text-white/50 mb-10 max-w-xl mx-auto">Identify the specific load-paths causing identity debt across your talent tiers.</p>
+                    <button onclick="showPillar('simulator')" class="btn-exec">Run Reclaim Simulator</button>
                 </div>
             </div>
         </div>
 
-        <!-- ===================== PILLAR 02: NAVIGATE ===================== -->
+        <!-- PILLAR 02 -->
         <div id="pillar-navigate" class="tab-content p-6 lg:p-10">
             <div class="max-w-4xl mx-auto">
-                <header class="mb-8">
+                <header class="mb-10 text-center lg:text-left">
                     <span class="text-exec-blue font-black text-[11px] uppercase tracking-[0.3em] mb-3 block">Pillar 02</span>
-                    <h2 class="text-4xl font-black text-exec-navy mb-4 leading-tight">Navigate: The Terrain.</h2>
-                    <p class="prose-text mb-8">Masked leaders fail because they are navigating institutional terrain without an honest map of where they actually stand.</p>
+                    <h2 class="text-4xl lg:text-6xl font-black text-exec-navy mb-4 tracking-tight leading-none">Navigate: The Terrain.</h2>
                 </header>
-
-                <div class="grid md:grid-cols-2 gap-8 mb-10">
-                    <div class="card sidebar-accent">
-                        <h4 class="text-sm font-black text-exec-blue uppercase tracking-wider mb-3">The Real Map</h4>
-                        <p class="text-sm text-slate-600 leading-relaxed">Differentiate between your official org chart and your actual operational power nodes.</p>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="card border-l-8 border-exec-blue flex flex-col justify-center">
+                        <h4 class="text-sm font-black text-exec-blue uppercase tracking-wider mb-3">Official vs. Actual</h4>
+                        <p class="text-sm text-slate-600 leading-relaxed italic">The unwritten rules dictated by structural secrecy determine your actual velocity.</p>
                     </div>
                     <div class="card">
-                        <h4 class="text-sm font-black text-exec-navy uppercase tracking-wider mb-3">Terrain Markers</h4>
-                        <p class="text-xs text-slate-500 italic">• Decision Latency Zones<br>• Reward Architecture<br>• Communication Silos</p>
+                        <h4 class="text-sm font-black text-exec-navy uppercase tracking-wider mb-4">Terrain Markers</h4>
+                        <ul class="space-y-3 text-xs text-slate-500 font-bold uppercase tracking-widest list-none">
+                            <li class="flex items-center gap-2"><span class="text-exec-teal">›</span> Decision Latency Zones</li>
+                            <li class="flex items-center gap-2"><span class="text-exec-teal">›</span> Reward Architecture</li>
+                            <li class="flex items-center gap-2"><span class="text-exec-teal">›</span> Communication Silos</li>
+                        </ul>
                     </div>
                 </div>
-
-                <div class="text-center">
-                    <a href="https://calendar.app.google/s18dHSNbE8tBj1eEA" target="_blank" class="btn-exec" style="background:var(--exec-navy); width:100%; max-width:400px;">Schedule Strategy Session</a>
+                <div class="pillar-cta-card">
+                    <h3 class="text-2xl font-serif italic mb-2">Map Your Architecture</h3>
+                    <p class="text-sm text-white/50 mb-10 max-w-xl mx-auto">Dismantle the institutional fog that keeps your high-performers in a loop of performative survival.</p>
+                    <a href="https://calendar.app.google/s18dHSNbE8tBj1eEA" target="_blank" class="btn-exec">Schedule Roadmap Session</a>
                 </div>
             </div>
         </div>
 
-        <!-- ===================== PILLAR 03: MANAGE ===================== -->
+        <!-- PILLAR 03 -->
         <div id="pillar-manage" class="tab-content p-6 lg:p-10">
-            <div class="max-w-4xl mx-auto">
-                <header class="mb-8">
+            <div class="max-w-4xl mx-auto text-center lg:text-left">
+                <header class="mb-10">
                     <span class="text-exec-blue font-black text-[11px] uppercase tracking-[0.3em] mb-3 block">Pillar 03</span>
-                    <h2 class="text-4xl font-black text-exec-navy mb-4 leading-tight">Manage: The Transfer.</h2>
-                    <p class="prose-text mb-8">AI shifts the weight of machine output onto human leaders. This is the <strong>Hidden Strain Transfer.</strong></p>
+                    <h2 class="text-4xl lg:text-6xl font-black text-exec-navy mb-4 leading-tight">Manage: The Transfer.</h2>
                 </header>
-
-                <div class="card mb-10 overflow-hidden py-4 px-6">
-                    <h3 class="text-sm font-black text-exec-navy mb-2 uppercase tracking-wider">Human Capacity vs. AI Strain</h3>
-                    <div id="pillar3Plot" style="width:100%;height:280px;"></div>
+                <div class="card mb-10 overflow-hidden p-8 border-l-8 border-exec-blue">
+                    <h3 class="text-sm font-black text-exec-navy mb-4 uppercase tracking-wider">Human Capacity vs. AI Strain</h3>
+                    <div id="pillar3Plot" style="width:100%;height:300px;"></div>
                 </div>
-
-                <div class="mobile-pad" style="background:#0B1530; color:white; border-radius:1.5rem; padding:2rem 2.5rem; text-align:center;">
-                    <h3 class="text-xl font-serif italic text-exec-teal mb-4">Stop the Capacity Hemorrhage</h3>
-                    <p class="text-sm text-white/60 mb-6">Manage the machine, don't let the machine manage your leaders.</p>
-                    <a href="https://stan.store/nikkicates" target="_blank" class="btn-exec" style="background:#58BBC2; color:#0B1530 !important;">Get Volume 2 Toolkit</a>
+                <div class="pillar-cta-card">
+                    <h3 class="text-2xl font-serif italic mb-2">Stop the Transfer</h3>
+                    <p class="text-sm text-white/50 mb-10 max-w-xl mx-auto">Identify the invisible strain being offloaded onto leaders by unchecked automation.</p>
+                    <a href="https://stan.store/nikkicates/p/unmask-ai-structural-audit" target="_blank" class="btn-exec">Unlock Certified Audit ($297)</a>
                 </div>
             </div>
         </div>
 
-        <!-- ===================== PILLAR 04: ADVOCATE ===================== -->
+        <!-- PILLAR 04 -->
         <div id="pillar-advocate" class="tab-content p-6 lg:p-10">
             <div class="max-w-4xl mx-auto">
-                <header class="mb-10">
+                <header class="mb-10 text-center lg:text-left">
                     <span class="text-exec-blue font-black text-[11px] uppercase tracking-[0.3em] mb-3 block">Pillar 04</span>
-                    <h2 class="text-4xl lg:text-6xl font-black text-exec-navy mb-6 leading-tight">Advocate: The Alignment.</h2>
-                    <p class="prose-text border-l-4 border-exec-teal pl-6 italic">Responsibility without Authority is the most quietly devastating form of institutional gaslighting.</p>
+                    <h2 class="text-4xl lg:text-6xl font-black text-exec-navy mb-6 tracking-tighter leading-none">Advocate: The Alignment.</h2>
+                    <p class="prose-text border-l-4 border-exec-blue pl-6 italic text-left leading-relaxed">Responsibility without Authority is the most quietly devastating form of institutional gaslighting.</p>
                 </header>
-
-                <div class="grid md:grid-cols-2 gap-8 mb-10">
-                    <div class="card sidebar-accent">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="card border-l-8 border-exec-blue h-full flex flex-col justify-center">
                         <h3 class="text-sm font-black uppercase text-exec-blue mb-4">The Asymmetry Gap</h3>
-                        <p class="text-sm text-slate-600">Identify where leaders are held to retention targets they cannot structurally influence.</p>
+                        <p class="text-sm text-slate-600 leading-relaxed">Identify where managers are held to targets they have no structural power to influence.</p>
                     </div>
-                    <div class="card">
-                        <h3 class="text-sm font-black uppercase text-exec-navy mb-4">Decision Rights</h3>
-                        <p class="text-xs text-slate-500 italic">"Waiting for a yes" is the most expensive line item on your organization's P&L.</p>
+                    <div class="card h-full flex flex-col justify-center">
+                        <h3 class="text-sm font-black uppercase text-exec-navy mb-4">The Decision Maze</h3>
+                        <p class="text-xs text-slate-500 italic leading-relaxed">"Waiting for a yes" is the single most expensive line item on your organization's P&L.</p>
                     </div>
                 </div>
-
-                <div class="text-center">
-                    <a href="https://calendar.app.google/s18dHSNbE8tBj1eEA" target="_blank" class="btn-exec" style="background:#0B1530; width:100%; max-width:400px;">Audit Your Decision Rights</a>
+                <div class="pillar-cta-card">
+                    <h3 class="text-2xl font-serif italic mb-2">Audit Authority Alignment</h3>
+                    <p class="text-sm text-white/50 mb-10 max-w-xl mx-auto">Dismantle the bottlenecks that inhibit team velocity and individual growth.</p>
+                    <a href="https://stan.store/nikkicates/p/unmask-ai-structural-audit" target="_blank" class="btn-exec">Initiate Structural Audit ($297)</a>
                 </div>
             </div>
         </div>
 
-        <!-- Pillar 05: SUSTAIN -->
+        <!-- PILLAR 05 -->
         <div id="pillar-sustain" class="tab-content p-6 lg:p-10">
-            <div class="max-w-4xl mx-auto">
+            <div class="max-w-4xl mx-auto text-center lg:text-left">
                 <header class="mb-10">
                     <span class="text-exec-blue font-black text-[11px] uppercase tracking-[0.3em] mb-3 block">Pillar 05</span>
-                    <h2 class="text-4xl lg:text-6xl font-black text-exec-navy mb-6 leading-tight">Sustain: The Healing.</h2>
-                    <p class="prose-text mb-8">A system that requires the destruction of the person operating it is a design failure. Placing the burden on the architecture, not the individual.</p>
+                    <h2 class="text-4xl lg:text-6xl font-black text-exec-navy mb-6 tracking-tighter">Sustain: The Healing.</h2>
                 </header>
-                <div class="text-center">
-                    <a href="https://calendar.app.google/s18dHSNbE8tBj1eEA" target="_blank" class="btn-exec" style="background:#0B1530; width:100%; max-width:400px;">Schedule Roadmap Session</a>
+                <div class="card border-l-8 border-exec-blue py-12 mb-6 text-center">
+                    <p class="text-2xl font-serif italic text-slate-600 mb-8 leading-relaxed">"Healing is not a personality trait. It is a structural protective measure."</p>
+                    <p class="text-base text-slate-500 font-light leading-relaxed max-w-2xl mx-auto">Shift the burden of transformation from individuals back onto architecture. Build for human longevity.</p>
+                </div>
+                <div class="pillar-cta-card">
+                    <h3 class="text-2xl font-serif italic mb-2">Build for Wholeness</h3>
+                    <p class="text-sm text-white/50 mb-10 max-w-xl mx-auto">Transition from extraction to stewardship. Recalibrate your architecture for sustainable output.</p>
+                    <a href="https://calendar.app.google/s18dHSNbE8tBj1eEA" target="_blank" class="btn-exec">Schedule Roadmap Session</a>
                 </div>
             </div>
         </div>
 
-        <!-- Pillar 06: KINDLE -->
+        <!-- PILLAR 06 -->
         <div id="pillar-kindle" class="tab-content p-6 lg:p-10">
             <div class="max-w-4xl mx-auto">
-                <header class="mb-10">
+                <header class="mb-10 text-center lg:text-left">
                     <span class="text-exec-blue font-black text-[11px] uppercase tracking-[0.3em] mb-3 block">Pillar 06</span>
-                    <h2 class="text-4xl lg:text-6xl font-black text-exec-navy mb-6 leading-tight">Kindle: The Practice Field.</h2>
-                    <p class="prose-text mb-10">Automating the practice field removes the somatic wisdom built through reps. Protect your successors from Judgment Atrophy.</p>
+                    <h2 class="text-4xl lg:text-6xl font-black text-exec-navy mb-6 tracking-tighter">Kindle: Rebuilding the Field.</h2>
+                    <p class="prose-text border-l-4 border-exec-blue pl-6 italic">The Junior Cliff is a deliberate judgment atrophy event.</p>
                 </header>
-                <div class="card mb-10 overflow-hidden py-4 px-6">
-                    <h3 class="text-sm font-black text-exec-navy mb-2 uppercase tracking-wider">Judgment vs. Automation</h3>
-                    <div id="pillar6Plot" style="width:100%;height:280px;"></div>
+                <div class="card mb-10 overflow-hidden p-8 border-l-8 border-exec-blue shadow-inner bg-slate-50/50">
+                    <h3 class="text-sm font-black text-exec-navy mb-6 uppercase tracking-wider text-center">Judgment vs. Automation Curve</h3>
+                    <div id="pillar6Plot" style="width:100%;height:300px;"></div>
                 </div>
-                <div class="text-center">
-                    <a href="https://stan.store/nikkicates" target="_blank" class="btn-exec" style="background:#58BBC2; color:#0B1530 !important; width:100%; max-width:400px;">Get Volume 2 Toolkit</a>
+                <div class="pillar-cta-card">
+                    <h3 class="text-2xl font-serif italic mb-2">Secure Your Succession</h3>
+                    <p class="text-sm text-white/50 mb-10 max-w-xl mx-auto">Identify the automation risks atrophying the judgment of your emerging leaders.</p>
+                    <a href="https://stan.store/nikkicates/p/unmask-ai-structural-audit" target="_blank" class="btn-exec">Audit Your Pipeline ($297)</a>
                 </div>
             </div>
         </div>
 
-        <!-- Closing -->
+        <!-- CONCLUSION -->
         <div id="pillar-conclusion" class="tab-content p-6 lg:p-10">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-6xl font-black text-exec-navy mb-8">It is time<br><span class="text-exec-teal italic font-serif">to unmask.</span></h2>
-                <div class="card border-none shadow-none text-left mb-10 max-w-2xl mx-auto">
-                    <p class="text-lg font-serif italic text-slate-500 mb-6">"You do not need board approval to start. You need the courage to ask one honest question and protect one person's development tomorrow."</p>
-                    <p class="text-sm text-slate-400">&mdash; Nikki Cates, 2026</p>
+            <div class="max-w-4xl mx-auto text-center py-10">
+                <h2 class="text-7xl font-black text-exec-navy mb-8 leading-none tracking-tighter">It is time<br><span class="text-exec-blue italic font-serif">to unmask.</span></h2>
+                <div class="card border-none shadow-none text-left mb-12 max-w-2xl mx-auto bg-slate-50 p-12 rounded-[3rem]">
+                    <p class="text-2xl font-serif italic text-slate-500 mb-10 leading-relaxed">"You now have the blueprint. Your next act is to protect the development of your team by redesigning the systems that inhibit them."</p>
+                    <div class="flex items-center gap-5 border-t pt-8 border-slate-200">
+                        <div class="h-14 w-14 bg-exec-blue rounded-full shadow-lg"></div>
+                        <div>
+                            <p class="text-lg text-exec-navy font-black uppercase tracking-widest leading-none mb-1.5">Nikki Cates</p>
+                            <p class="text-xs text-slate-400 font-bold uppercase tracking-[0.2em] leading-none">Strategic Architect &bull; 2026</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="flex flex-wrap justify-center gap-6">
-                    <a href="https://stan.store/nikkicates" target="_blank" class="btn-exec" style="background:#58BBC2; color:#0B1530 !important; padding:1rem 3rem;">Get Volume 2 Toolkit</a>
-                    <a href="mailto:info@strategicunmasking.com" class="btn-exec" style="background:#0B1530; padding:1rem 3rem;">Consult Nikki Cates</a>
+                <div class="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto mb-20">
+                    <a href="https://stan.store/nikkicates/p/unmask-ai-structural-audit" target="_blank" class="btn-exec" style="background:var(--exec-navy); color:white !important; padding:1.25rem;">Unlock Diagnostic Engine ($297)</a>
+                    <a href="https://calendar.app.google/s18dHSNbE8tBj1eEA" target="_blank" class="btn-exec" style="padding:1.25rem;">Schedule Roadmap Session</a>
                 </div>
+                <a href="https://drive.google.com/file/d/11HT8uCavHXZhbRQCM6LDgVGY4tpCvSE9/view?usp=drive_link" target="_blank" class="text-xs font-black text-slate-300 uppercase tracking-[0.4em] hover:text-exec-blue transition-colors underline underline-offset-[12px] decoration-exec-teal decoration-2">Return to Ebook Technical Edition</a>
             </div>
         </div>
 
@@ -406,7 +410,14 @@
         <footer class="bg-white border-t border-slate-200 pt-20 pb-10 px-6 text-center">
             <div class="max-w-4xl mx-auto">
                 <p class="text-exec-navy uppercase font-black text-sm tracking-tight mb-2">The UNMASK Blueprint<sup style="font-size:0.5em;vertical-align:super;line-height:0;font-weight:900;">™</sup></p>
-                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-[0.4em] mb-6">&copy; 2026 Nikki Cates | Strategic Transformations</p>
+                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-[0.4em] mb-6">&copy; 2026 Strategic Transformations &bull; Nikki Cates</p>
+                <div class="flex flex-wrap justify-center gap-5 text-[8px] uppercase font-black text-slate-300 tracking-widest">
+                    <span>Womanist Bioethics</span>
+                    <span>&bull;</span>
+                    <span>Structural Secrecy</span>
+                    <span>&bull;</span>
+                    <span>Radical Subjectivity</span>
+                </div>
             </div>
         </footer>
     </div>
@@ -425,8 +436,6 @@
                 navEl.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
             window.scrollTo(0, 0);
-            
-            // Re-init specific charts
             if (pillar === 'uncover') setTimeout(initUncoverChart, 100);
             if (pillar === 'manage') setTimeout(initManageChart, 100);
             if (pillar === 'kindle') setTimeout(initKindleChart, 100);
@@ -437,13 +446,10 @@
             const salary = parseInt(document.getElementById('sim-salary').value) || 0;
             const maskReduc = parseInt(document.getElementById('sim-masking').value) / 100;
             const fricReduc = parseInt(document.getElementById('sim-friction').value) / 100;
-
             document.getElementById('label-masking').innerText = (maskReduc * 100) + '%';
             document.getElementById('label-friction').innerText = (fricReduc * 100) + '%';
-
             const hours = Math.round(teamSize * (maskReduc * 20 + fricReduc * 15));
             const fiscal = (teamSize * salary * (maskReduc * 0.1 + fricReduc * 0.05)) / 1000;
-
             document.getElementById('res-hours').innerText = hours;
             document.getElementById('res-fiscal').innerText = fiscal.toFixed(1);
         }
@@ -457,7 +463,7 @@
                     labels: ['Satisfied', 'Exhausted', 'Cynical'],
                     datasets: [{ data: [1, 1.8, 3.0], backgroundColor: ['#58BBC2', '#123D72', '#F43F5E'], borderRadius: 10 }]
                 },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { grid: { display: false } } } }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { grid: { display: false }, ticks: { font: { weight: 'bold' } } } } }
             });
         }
 
@@ -467,7 +473,7 @@
                 mode: 'lines+markers', name: 'AI Strain', line: { color: '#F43F5E', width: 3 }
             }, {
                 x: ['Q1', 'Q2', 'Q3', 'Q4'], y: [95, 80, 45, 15],
-                mode: 'lines+markers', name: 'Human Capacity', line: { color: '#58BBC2', width: 3 }
+                mode: 'lines+markers', name: 'Human Capacity', line: { color: '#123D72', width: 3 }
             }], {
                 margin: { l: 40, r: 40, t: 20, b: 50 }, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
                 legend: { orientation: 'h', y: -0.2 }
@@ -476,11 +482,11 @@
 
         function initKindleChart() {
             Plotly.newPlot('pillar6Plot', [{
-                x: ['Entry', 'Manager', 'Director', 'VP', 'C-Suite'],
+                x: ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'],
                 y: [100, 85, 40, 20, 5],
-                name: 'Judgment Readiness', type: 'bar', marker: { color: '#58BBC2' }
+                name: 'Judgment Readiness', type: 'bar', marker: { color: '#123D72' }
             }, {
-                x: ['Entry', 'Manager', 'Director', 'VP', 'C-Suite'],
+                x: ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'],
                 y: [5, 20, 65, 85, 100],
                 name: 'Automation Reliance', type: 'scatter', mode: 'lines+markers', line: { color: '#F43F5E', width: 3 }
             }], {
@@ -494,13 +500,12 @@
             btn.innerText = 'Generating...';
             html2canvas(document.getElementById('capture-area'), { scale: 1.5, useCORS: true }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'unmask-blueprint-v2.png';
+                link.download = 'unmask-manual-summary.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
                 btn.innerText = 'Export Brief';
             });
         });
-
         window.onload = runSimulation;
     </script>
 </body>

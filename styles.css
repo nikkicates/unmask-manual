@@ -241,7 +241,6 @@ select {
 
 .card,
 .diag-card,
-.note-box,
 .also-rec-box {
   background: var(--white);
   border: 1px solid var(--steel);
@@ -259,6 +258,24 @@ select {
   border-radius: 1.5rem;
   padding: 2.5rem;
   box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.28);
+}
+
+.note-box {
+  background: rgba(18, 61, 114, 0.45);
+  border: 1px solid rgba(88, 187, 194, 0.14);
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.note-box .muted-light-small {
+  color: rgba(255, 255, 255, 0.62);
+  margin: 0 0 1.25rem;
+}
+
+.note-box .btn-teal {
+  width: 100%;
+  text-align: center;
 }
 
 .label-tag {
@@ -576,17 +593,14 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .diag-title {
-  .diag-title {
   word-break: break-word;
   overflow-wrap: anywhere;
-}
   font-size: clamp(1.7rem, 3.8vw, 2.8rem);
   font-weight: 700;
   color: var(--white);
   line-height: 1.1;
   margin: 0 0 0.75rem;
 }
-
 
 .diag-title em {
   color: var(--teal);

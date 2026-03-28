@@ -1,29 +1,16 @@
-<script>
 window.UNMASK_CONFIG = {
   links: {
-    offers: "https://unmask.nikkicates.com/manual-checkout",
-    session: "https://nikkicates.github.io/structuralburnout/briefing.html",
-    site: "https://nikkicates.github.io/structuralburnout/services.html",
-    inquiries: "mailto:nikki@strategicunmasking.com"
+    offers: "https://stan.store/nikkicates",
+    session: "https://calendar.app.google/s18dHSNbE8tBj1eEA",
+    site: "https://nikkicates.carrd.co",
+    inquiries: "mailto:info@strategicunmasking.com"
   },
 
   manualRefs: {
-    phase0: {
-      label: "Recalibration → Phase 0: Interrupt the System",
-      pages: "pp. 39–40"
-    },
-    phase1: {
-      label: "Recalibration → Phase 1: Map the System",
-      pages: "pp. 41–42"
-    },
-    phase2: {
-      label: "Recalibration → Phase 2: Reallocate Authority",
-      pages: "pp. 42–43"
-    },
-    phase3: {
-      label: "Recalibration → Phase 3: Lock the System",
-      pages: "pp. 44–45"
-    }
+    phase0: { label: "Recalibration → Phase 0: Interrupt the System", pages: "pp. 39–40" },
+    phase1: { label: "Recalibration → Phase 1: Map the System", pages: "pp. 41–42" },
+    phase2: { label: "Recalibration → Phase 2: Reallocate Authority", pages: "pp. 42–43" },
+    phase3: { label: "Recalibration → Phase 3: Lock the System", pages: "pp. 44–45" }
   },
 
   options: [
@@ -41,4 +28,3 @@ window.UNMASK_CONFIG = {
     results: "unmask-diagnostic-results"
   }
 };
-</script>

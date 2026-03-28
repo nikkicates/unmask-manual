@@ -1,5 +1,4 @@
-console.log("UNMASK app.js loaded");
-console.log("UNMASK config:", window.UNMASK_CONFIG);
+console.log("UNMASK minimal app.js loaded");
 
 const CONFIG = window.UNMASK_CONFIG || {
   links: {
@@ -8,249 +7,131 @@ const CONFIG = window.UNMASK_CONFIG || {
     site: "#",
     inquiries: "mailto:info@example.com"
   },
-  manualRefs: {
-    phase0: { label: "Recalibration → Phase 0", pages: "" },
-    phase1: { label: "Recalibration → Phase 1", pages: "" },
-    phase2: { label: "Recalibration → Phase 2", pages: "" },
-    phase3: { label: "Recalibration → Phase 3", pages: "" }
-  },
   options: [
     { label: "Never", value: 1 },
     { label: "Rarely", value: 2 },
     { label: "Sometimes", value: 3 },
     { label: "Often", value: 4 },
     { label: "Constantly", value: 5 }
-  ],
-  storageKeys: {
-    tab: "unmask-active-tab",
-    scores: "unmask-diagnostic-scores",
-    step: "unmask-diagnostic-step",
-    results: "unmask-diagnostic-results"
-  }
+  ]
 };
 
 const TABS = ["overview", "roi", "diagnostic", "manual", "contact"];
 
-const state = {
-  scores: {
-    lmi: [0, 0, 0],
-    raa: [0, 0, 0],
-    itc: [0, 0, 0]
-  },
-  step: 1,
-  results: null
+const scores = {
+  lmi: [0, 0, 0],
+  raa: [0, 0, 0],
+  itc: [0, 0, 0]
 };
 
-let maskingChart = null;
-let manageChartInitialized = false;
-
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("UNMASK DOM fully loaded");
-
-  try {
-    bindLinks();
-    bindNav();
-    bindGoToButtons();
-    buildAnswerButtons();
-    bindROI();
-    bindDiagnostic();
-    restoreState();
-    calcROI();
-    initChartsForVisibleTab();
-
-    console.log("UNMASK init complete");
-  } catch (err) {
-    console.error("UNMASK initialization error:", err);
-  }
+  console.log("DOM loaded");
+  bindLinks();
+  bindNav();
+  bindGoToButtons();
+  buildAnswerButtons();
+  bindDiagnostic();
+  bindROI();
+  calcROI();
 });
 
-/* ---------------------------
-   Utilities
----------------------------- */
-
-function safeEl(id) {
+function $(id) {
   return document.getElementById(id);
 }
 
-function setHref(id, href) {
-  const el = safeEl(id);
-  if (el) el.href = href;
-}
-
-function setText(id, value) {
-  const el = safeEl(id);
-  if (el) el.textContent = value;
-}
-
-function saveToStorage(key, value) {
-  try {
-    localStorage.setItem(key, value);
-  } catch (err) {
-    console.warn("Storage write failed:", err);
-  }
-}
-
-function readFromStorage(key) {
-  try {
-    return localStorage.getItem(key);
-  } catch (err) {
-    console.warn("Storage read failed:", err);
-    return null;
-  }
-}
-
-/* ---------------------------
-   Links
----------------------------- */
-
 function bindLinks() {
-  setHref("offersLinkNav", CONFIG.links.offers);
-  setHref("offersLinkResults", CONFIG.links.offers);
-  setHref("offersLinkContact", CONFIG.links.offers);
+  const map = {
+    offersLinkNav: CONFIG.links.offers,
+    offersLinkResults: CONFIG.links.offers,
+    offersLinkContact: CONFIG.links.offers,
+    sessionLinkOverview: CONFIG.links.session,
+    sessionLinkResults: CONFIG.links.session,
+    sessionLinkContact: CONFIG.links.session,
+    siteLinkContact: CONFIG.links.site,
+    inquiriesLinkContact: CONFIG.links.inquiries
+  };
 
-  setHref("sessionLinkOverview", CONFIG.links.session);
-  setHref("sessionLinkResults", CONFIG.links.session);
-  setHref("sessionLinkContact", CONFIG.links.session);
-
-  setHref("siteLinkContact", CONFIG.links.site);
-  setHref("inquiriesLinkContact", CONFIG.links.inquiries);
+  Object.entries(map).forEach(([id, href]) => {
+    const el = $(id);
+    if (el) el.href = href;
+  });
 }
-
-/* ---------------------------
-   Tabs / Nav
----------------------------- */
 
 function bindNav() {
-  const buttons = document.querySelectorAll(".nav-btn");
-  console.log("UNMASK nav buttons found:", buttons.length);
-
-  buttons.forEach((btn) => {
+  document.querySelectorAll(".nav-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
-      const target = btn.dataset.tab;
-      console.log("UNMASK nav click:", target);
-      if (target) showTab(target);
+      const tab = btn.dataset.tab;
+      console.log("nav click:", tab);
+      showTab(tab);
     });
   });
 }
 
 function bindGoToButtons() {
-  const buttons = document.querySelectorAll("[data-goto]");
-  console.log("UNMASK goto buttons found:", buttons.length);
-
-  buttons.forEach((btn) => {
+  document.querySelectorAll("[data-goto]").forEach((btn) => {
     btn.addEventListener("click", () => {
-      const target = btn.dataset.goto;
-      console.log("UNMASK goto click:", target);
-      if (target) showTab(target);
+      const tab = btn.dataset.goto;
+      console.log("goto click:", tab);
+      showTab(tab);
     });
   });
 }
 
-function showTab(id) {
-  if (!TABS.includes(id)) {
-    console.warn("UNMASK showTab invalid tab:", id);
+function showTab(tabName) {
+  if (!TABS.includes(tabName)) {
+    console.warn("Invalid tab:", tabName);
     return;
   }
 
   TABS.forEach((tab) => {
-    safeEl(`tab-${tab}`)?.classList.remove("active");
+    const section = $(`tab-${tab}`);
+    const nav = $(`n-${tab}`);
 
-    const nav = safeEl(`n-${tab}`);
+    if (section) section.classList.remove("active");
     if (nav) {
       nav.classList.remove("active");
       nav.setAttribute("aria-selected", "false");
     }
   });
 
-  safeEl(`tab-${id}`)?.classList.add("active");
+  const targetSection = $(`tab-${tabName}`);
+  const targetNav = $(`n-${tabName}`);
 
-  const activeNav = safeEl(`n-${id}`);
-  if (activeNav) {
-    activeNav.classList.add("active");
-    activeNav.setAttribute("aria-selected", "true");
+  if (targetSection) targetSection.classList.add("active");
+  if (targetNav) {
+    targetNav.classList.add("active");
+    targetNav.setAttribute("aria-selected", "true");
   }
 
-  saveToStorage(CONFIG.storageKeys.tab, id);
   window.scrollTo({ top: 0, behavior: "smooth" });
-
-  // lazy init charts when relevant tab becomes visible
-  if (id === "roi" || id === "overview") {
-    calcROI();
-  }
-  if (id === "manual" || id === "contact" || id === "diagnostic") {
-    // no chart init needed
-  }
-  initChartsForVisibleTab(id);
 }
-
-function initChartsForVisibleTab(tabId = null) {
-  const activeTab = tabId || getActiveTab();
-
-  if (activeTab === "overview") {
-    initMaskingChart();
-    initManageChart(); // safe no-op if container missing
-  }
-
-  if (activeTab === "roi") {
-    // no chart here currently
-  }
-
-  if (activeTab === "manual") {
-    // no chart
-  }
-
-  if (activeTab === "contact") {
-    // no chart
-  }
-
-  // also try these globally in case containers exist elsewhere
-  initMaskingChart();
-  initManageChart();
-}
-
-function getActiveTab() {
-  const active = document.querySelector(".tab.active");
-  if (!active) return "overview";
-  return active.id.replace("tab-", "");
-}
-
-/* ---------------------------
-   ROI
----------------------------- */
 
 function bindROI() {
   ["sim-team", "sim-sal", "sim-mask", "sim-fric"].forEach((id) => {
-    safeEl(id)?.addEventListener("input", calcROI);
+    const el = $(id);
+    if (el) el.addEventListener("input", calcROI);
   });
 }
 
 function calcROI() {
-  const team = parseInt(safeEl("sim-team")?.value || "0", 10);
-  const sal = parseInt(safeEl("sim-sal")?.value || "0", 10);
-  const mask = parseInt(safeEl("sim-mask")?.value || "0", 10) / 100;
-  const fric = parseInt(safeEl("sim-fric")?.value || "0", 10) / 100;
-
-  setText("lbl-mask", `${Math.round(mask * 100)}%`);
-  setText("lbl-fric", `${Math.round(fric * 100)}%`);
+  const team = parseInt($("sim-team")?.value || "10", 10);
+  const sal = parseInt($("sim-sal")?.value || "125000", 10);
+  const mask = parseInt($("sim-mask")?.value || "20", 10) / 100;
+  const fric = parseInt($("sim-fric")?.value || "15", 10) / 100;
 
   const hrs = Math.round(team * (mask * 20 + fric * 15));
   const fis = (team * sal * (mask * 0.1 + fric * 0.05)) / 1000;
 
-  setText("res-hrs", `${hrs}`);
-  setText("res-fis", `${fis.toFixed(1)}`);
+  if ($("lbl-mask")) $("lbl-mask").textContent = `${Math.round(mask * 100)}%`;
+  if ($("lbl-fric")) $("lbl-fric").textContent = `${Math.round(fric * 100)}%`;
+  if ($("res-hrs")) $("res-hrs").textContent = `${hrs}`;
+  if ($("res-fis")) $("res-fis").textContent = `${fis.toFixed(1)}`;
 }
-
-/* ---------------------------
-   Diagnostic build / bind
----------------------------- */
 
 function buildAnswerButtons() {
   const rows = document.querySelectorAll(".q-block .freq-row");
-  console.log("UNMASK freq rows found:", rows.length);
-
   rows.forEach((row) => {
     row.innerHTML = "";
-
     CONFIG.options.forEach((opt) => {
       const btn = document.createElement("button");
       btn.type = "button";
@@ -266,7 +147,7 @@ function buildAnswerButtons() {
 function bindDiagnostic() {
   document.querySelectorAll(".q-block").forEach((block) => {
     const group = block.dataset.g;
-    const qIndex = parseInt(block.dataset.q, 10);
+    const q = parseInt(block.dataset.q, 10);
 
     block.querySelectorAll(".freq-opt").forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -277,218 +158,229 @@ function bindDiagnostic() {
 
         btn.classList.add("sel");
         btn.setAttribute("aria-pressed", "true");
-        state.scores[group][qIndex] = parseInt(btn.dataset.v, 10);
-        saveScores();
+        scores[group][q] = parseInt(btn.dataset.v, 10);
       });
     });
   });
 
-  safeEl("runAnalysisBtn")?.addEventListener("click", diagStep2);
-  safeEl("seeEntryBtn")?.addEventListener("click", diagStep3);
-  safeEl("retakeBtn")?.addEventListener("click", diagReset);
-  safeEl("copySummaryBtn")?.addEventListener("click", copySummary);
-}
-
-function saveScores() {
-  saveToStorage(CONFIG.storageKeys.scores, JSON.stringify(state.scores));
-}
-
-function saveStep() {
-  saveToStorage(CONFIG.storageKeys.step, String(state.step));
-}
-
-function saveResults() {
-  saveToStorage(CONFIG.storageKeys.results, JSON.stringify(state.results));
-}
-
-function restoreState() {
-  const savedTab = readFromStorage(CONFIG.storageKeys.tab);
-  if (savedTab && TABS.includes(savedTab)) {
-    showTab(savedTab);
-  } else {
-    showTab("overview");
-  }
-
-  const savedScores = readFromStorage(CONFIG.storageKeys.scores);
-  if (savedScores) {
-    try {
-      state.scores = JSON.parse(savedScores);
-      restoreSelections();
-    } catch (err) {
-      console.warn("Could not restore scores:", err);
-    }
-  }
-
-  const savedStep = parseInt(readFromStorage(CONFIG.storageKeys.step) || "1", 10);
-  const savedResults = readFromStorage(CONFIG.storageKeys.results);
-
-  if (savedResults) {
-    try {
-      state.results = JSON.parse(savedResults);
-    } catch (err) {
-      console.warn("Could not restore results:", err);
-      state.results = null;
-    }
-  }
-
-  if (savedStep >= 2 && allAnswered()) {
-    buildStep2();
-    switchDiagScreen(savedStep === 3 ? 3 : 2);
-    updateProgress(savedStep === 3 ? 3 : 2);
-  }
-
-  if (savedStep === 3 && state.results) {
-    buildStep3FromResults(state.results);
-    switchDiagScreen(3);
-    updateProgress(3);
-  }
-}
-
-function restoreSelections() {
-  document.querySelectorAll(".q-block").forEach((block) => {
-    const group = block.dataset.g;
-    const qIndex = parseInt(block.dataset.q, 10);
-    const value = state.scores[group][qIndex];
-
-    block.querySelectorAll(".freq-opt").forEach((btn) => {
-      const selected = parseInt(btn.dataset.v, 10) === value;
-      btn.classList.toggle("sel", selected);
-      btn.setAttribute("aria-pressed", selected ? "true" : "false");
-    });
-  });
+  $("runAnalysisBtn")?.addEventListener("click", runAnalysis);
+  $("seeEntryBtn")?.addEventListener("click", showEntryPoint);
+  $("retakeBtn")?.addEventListener("click", resetDiagnostic);
+  $("copySummaryBtn")?.addEventListener("click", copySummary);
 }
 
 function allAnswered() {
-  return Object.values(state.scores).every((group) => group.every((v) => v > 0));
+  return Object.values(scores).every((arr) => arr.every((v) => v > 0));
 }
 
 function avg(arr) {
   return arr.reduce((a, b) => a + b, 0) / arr.length;
 }
 
-function signalLevel(value) {
-  if (value <= 1.6) return { label: "Low Signal", color: "#22c55e" };
-  if (value <= 2.6) return { label: "Moderate Signal", color: "#58BBC2" };
-  if (value <= 3.6) return { label: "Elevated Signal", color: "#F97316" };
+function levelLabel(v) {
+  if (v <= 1.6) return { label: "Low Signal", color: "#22c55e" };
+  if (v <= 2.6) return { label: "Moderate Signal", color: "#58BBC2" };
+  if (v <= 3.6) return { label: "Elevated Signal", color: "#F97316" };
   return { label: "Acute Signal", color: "#F43F5E" };
 }
 
-/* ---------------------------
-   Diagnostic step 2
----------------------------- */
-
-function diagStep2() {
+function runAnalysis() {
   if (!allAnswered()) {
-    const warn = safeEl("dw1");
-    if (warn) warn.style.display = "block";
+    if ($("dw1")) $("dw1").style.display = "block";
     return;
   }
 
-  const warn = safeEl("dw1");
-  if (warn) warn.style.display = "none";
+  if ($("dw1")) $("dw1").style.display = "none";
 
-  buildStep2();
-  state.step = 2;
-  saveStep();
-  switchDiagScreen(2);
-  updateProgress(2);
-}
+  const lmi = avg(scores.lmi);
+  const raa = avg(scores.raa);
+  const itc = avg(scores.itc);
 
-function buildStep2() {
-  const lmi = avg(state.scores.lmi);
-  const raa = avg(state.scores.raa);
-  const itc = avg(state.scores.itc);
-
-  const scoreGrid = safeEl("scoreGrid");
-  if (scoreGrid) {
-    scoreGrid.innerHTML = [
-      buildMeter("LMI", "Masking Index", lmi, signalLevel(lmi)),
-      buildMeter("RAA", "Authority Gap", raa, signalLevel(raa)),
-      buildMeter("ITC", "Hidden Labor", itc, signalLevel(itc))
+  if ($("scoreGrid")) {
+    $("scoreGrid").innerHTML = [
+      renderScore("LMI", "Masking Index", lmi),
+      renderScore("RAA", "Authority Gap", raa),
+      renderScore("ITC", "Hidden Labor", itc)
     ].join("");
   }
 
-  const patterns = [];
-  if (lmi >= 3.5 && raa >= 3.5) patterns.push("High masking plus high authority gap suggests middle-layer overload and execution drag.");
-  if (lmi >= 3.5 && itc >= 3.0) patterns.push("High masking plus elevated ITC suggests disproportionate burden on specific leaders or groups.");
-  if (raa >= 3.5 && itc >= 3.5) patterns.push("Authority gaps plus high extraction suggest leaders are absorbing systemic dysfunction directly.");
-  if (lmi >= 4) patterns.push("Masking is acute. Expect reduced decision clarity and elevated cognitive fatigue.");
-  if (raa >= 4) patterns.push("Authority misalignment is acute. Expect bottlenecks, escalations, and missed delivery windows.");
-  if (itc >= 4) patterns.push("Hidden extraction is acute. Expect burnout risk and inequitable burden distribution.");
-  if (!patterns.length) patterns.push("Signals are mixed but not acute. Use the recommended entry point to prevent reversion and escalation.");
-
-  const patternBox = safeEl("patternBox");
-  if (patternBox) {
-    patternBox.innerHTML = `
+  if ($("patternBox")) {
+    $("patternBox").innerHTML = `
       <div class="pb-lbl">Pattern Recognition</div>
-      ${patterns.map((p) => `<div class="pattern-item">${p}</div>`).join("")}
+      <div class="pattern-item">These signals should be treated as structural indicators, not personal shortcomings.</div>
+      <div class="pattern-item">Use the next step to identify where to begin in the recalibration system.</div>
     `;
   }
 
-  const translation = [];
-  if (lmi >= 3) {
-    translation.push("<p><strong style='color:white;'>LMI elevated</strong> — Leaders are compensating for structural gaps through performance and overextension.</p>");
-  }
-  if (raa >= 3) {
-    translation.push("<p><strong style='color:white;'>RAA elevated</strong> — Decisions are being held above the level of execution, increasing delay and escalation dependency.</p>");
-  }
-  if (itc >= 3) {
-    translation.push("<p><strong style='color:white;'>ITC elevated</strong> — Hidden labor is present and is likely falling unevenly across leaders or groups.</p>");
-  }
-  if (!translation.length) {
-    translation.push("<p>Signal levels are currently within a lower range. Continue monitoring and re-run after meaningful structural change.</p>");
+  if ($("transBox")) {
+    $("transBox").innerHTML = `
+      <p><strong style="color:white;">LMI:</strong> ${lmi.toFixed(1)}</p>
+      <p><strong style="color:white;">RAA:</strong> ${raa.toFixed(1)}</p>
+      <p><strong style="color:white;">ITC:</strong> ${itc.toFixed(1)}</p>
+    `;
   }
 
-  const transBox = safeEl("transBox");
-  if (transBox) {
-    transBox.innerHTML = translation.join("");
-  }
+  switchDiagScreen(2);
 }
 
-function buildMeter(code, label, value, level) {
+function renderScore(code, label, value) {
+  const lvl = levelLabel(value);
   const pct = Math.round(((value - 1) / 4) * 100);
+
   return `
     <div class="score-cell">
       <div class="sc-label">${label}</div>
-      <div class="sc-val" style="color:${level.color}">${value.toFixed(1)}</div>
-      <div class="sc-lvl" style="color:${level.color}">${level.label}</div>
+      <div class="sc-val" style="color:${lvl.color}">${value.toFixed(1)}</div>
+      <div class="sc-lvl" style="color:${lvl.color}">${lvl.label}</div>
       <div class="bar-track">
-        <div class="bar-fill" style="width:${pct}%;background:${level.color}"></div>
+        <div class="bar-fill" style="width:${pct}%;background:${lvl.color}"></div>
       </div>
       <div class="sc-label" style="margin-top:0.45rem;">${code}</div>
     </div>
   `;
 }
 
-/* ---------------------------
-   Diagnostic step 3
----------------------------- */
-
-function diagStep3() {
-  const lmi = avg(state.scores.lmi);
-  const raa = avg(state.scores.raa);
-  const itc = avg(state.scores.itc);
+function showEntryPoint() {
+  const lmi = avg(scores.lmi);
+  const raa = avg(scores.raa);
+  const itc = avg(scores.itc);
   const overall = (lmi + raa + itc) / 3;
 
-  let result;
+  let title = "Begin with Phase 1: Map the System";
+  let desc = "Your signal pattern suggests the need for visibility before intervention.";
+  let actions = [
+    "Complete the Authority–Responsibility Gap Mapper.",
+    "Conduct Load Path Analysis.",
+    "Identify escalation patterns and informal workarounds."
+  ];
 
   if (overall >= 3.8 || lmi >= 4 || itc >= 4) {
-    result = {
-      key: "phase0",
-      phase: "Phase 0",
-      title: "Interrupt the System",
-      desc: "Your signal pattern suggests acute strain. Begin by relieving pressure before you attempt deeper redesign.",
-      actions: [
-        "Remove one visible burden from the system within the next 7 days.",
-        "Use the Escalation Loop Kill Sheet to eliminate one recurring escalation.",
-        "Remove or reduce one unnecessary approval layer.",
-        "Reassign one decision to the appropriate level."
-      ],
-      also: "After Phase 0, move to <strong style='color:white;'>Phase 1: Map the System</strong> so authority gaps and workflow breakdowns become visible."
-    };
+    title = "Begin with Phase 0: Interrupt the System";
+    desc = "Your signal pattern suggests acute strain. Reduce pressure first.";
+    actions = [
+      "Remove one visible burden.",
+      "Eliminate one recurring escalation loop.",
+      "Reassign one decision to the appropriate level."
+    ];
   } else if (raa >= 3.5) {
-    result = {
-      key: "phase2",
-      phase: "Phase 2",
-      title: "Reallocate Authority",
-      desc: "Your strongest signal is authority misalignment. Structural
+    title = "Begin with Phase 2: Reallocate Authority";
+    desc = "Your strongest signal is authority misalignment. Structural correction should now take priority.";
+    actions = [
+      "Apply the Decision Rights Reset Canvas.",
+      "Redesign approval thresholds.",
+      "Adjust span of control where overload is concentrated."
+    ];
+  } else if (overall < 2.5) {
+    title = "Begin with Phase 3: Lock the System";
+    desc = "Your current signal levels suggest lower strain. Focus on maintaining structural integrity.";
+    actions = [
+      "Define escalation thresholds.",
+      "Track KRIs.",
+      "Reinforce decision ownership clarity."
+    ];
+  }
+
+  if ($("ep-headline")) $("ep-headline").textContent = title;
+  if ($("ep-sub")) $("ep-sub").textContent = desc;
+
+  if ($("phaseCard")) {
+    $("phaseCard").innerHTML = `
+      <div class="phase-card-head">
+        <div class="pch-eyebrow">Recommended Entry Point</div>
+        <div class="pch-title">${title}</div>
+      </div>
+      <div class="phase-card-body">
+        <p class="pca-desc">${desc}</p>
+        <ul class="pca-list">
+          ${actions.map((a) => `<li><div class="pca-dot">›</div>${a}</li>`).join("")}
+        </ul>
+      </div>
+    `;
+  }
+
+  if ($("manualRefBox")) {
+    $("manualRefBox").innerHTML = `
+      <div class="mr-text">
+        <strong>Manual Reference</strong>
+        Turn to the corresponding recalibration phase in the manual.
+      </div>
+    `;
+  }
+
+  if ($("alsoRecText")) {
+    $("alsoRecText").innerHTML =
+      "Also review the relevant diagnostic sections before implementing structural changes.";
+  }
+
+  switchDiagScreen(3);
+}
+
+function switchDiagScreen(step) {
+  [1, 2, 3].forEach((n) => {
+    $("ds-" + n)?.classList.remove("active");
+  });
+  $("ds-" + step)?.classList.add("active");
+
+  updateProgress(step);
+}
+
+function updateProgress(step) {
+  for (let i = 1; i <= 3; i++) {
+    const dot = $("dp" + i);
+    const label = $("dl" + i);
+    if (!dot || !label) continue;
+
+    dot.classList.remove("active", "done");
+    label.classList.remove("active", "done");
+
+    if (i < step) {
+      dot.classList.add("done");
+      dot.textContent = "✓";
+      label.classList.add("done");
+    } else if (i === step) {
+      dot.classList.add("active");
+      dot.textContent = `0${i}`;
+      label.classList.add("active");
+    } else {
+      dot.textContent = `0${i}`;
+    }
+  }
+}
+
+function resetDiagnostic() {
+  scores.lmi = [0, 0, 0];
+  scores.raa = [0, 0, 0];
+  scores.itc = [0, 0, 0];
+
+  document.querySelectorAll(".freq-opt").forEach((btn) => {
+    btn.classList.remove("sel");
+    btn.setAttribute("aria-pressed", "false");
+  });
+
+  if ($("dw1")) $("dw1").style.display = "none";
+  switchDiagScreen(1);
+}
+
+async function copySummary() {
+  const summary = `
+UNMASK Diagnostic Summary
+
+LMI: ${avg(scores.lmi).toFixed(1)}
+RAA: ${avg(scores.raa).toFixed(1)}
+ITC: ${avg(scores.itc).toFixed(1)}
+`.trim();
+
+  try {
+    await navigator.clipboard.writeText(summary);
+    const btn = $("copySummaryBtn");
+    if (btn) {
+      const old = btn.textContent;
+      btn.textContent = "Summary Copied";
+      setTimeout(() => {
+        btn.textContent = old;
+      }, 1500);
+    }
+  } catch (err) {
+    alert(summary);
+  }
+}

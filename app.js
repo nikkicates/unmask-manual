@@ -1,3 +1,5 @@
+console.log("UNMASK app.js loaded");
+console.log("UNMASK config:", window.UNMASK_CONFIG);
 const CONFIG = window.UNMASK_CONFIG || {
   links: {
     offers: "#",

@@ -1,9 +1,9 @@
 window.UNMASK_CONFIG = {
   links: {
-    offers: "https://stan.store/nikkicates",
-    session: "https://calendar.app.google/s18dHSNbE8tBj1eEA",
-    site: "https://nikkicates.carrd.co",
-    inquiries: "mailto:info@strategicunmasking.com"
+    offers: "https://nikkicates.github.io/structuralburnout/services.html",
+    session: "https://nikkicates.github.io/structuralburnout/briefing.html",
+    site: "https://linkedin.com/in/nikkicatesmiller",
+    inquiries: "mailto:nikki@strategicunmasking.com"
   },
 
   manualRefs: {
@@ -19,12 +19,5 @@ window.UNMASK_CONFIG = {
     { label: "Sometimes", value: 3 },
     { label: "Often", value: 4 },
     { label: "Constantly", value: 5 }
-  ],
-
-  storageKeys: {
-    tab: "unmask-active-tab",
-    scores: "unmask-diagnostic-scores",
-    step: "unmask-diagnostic-step",
-    results: "unmask-diagnostic-results"
-  }
+  ]
 };

@@ -1,3 +1,8 @@
+console.log("STEP 1: app.js loaded");
+
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("STEP 2: DOM loaded");
+});
 console.log("UNMASK app.js loaded");
 console.log("UNMASK config:", window.UNMASK_CONFIG);
 const CONFIG = window.UNMASK_CONFIG || {

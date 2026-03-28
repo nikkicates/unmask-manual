@@ -1,10 +1,10 @@
 <script>
 window.UNMASK_CONFIG = {
   links: {
-    offers: "https://stan.store/nikkicates",
-    session: "https://calendar.app.google/s18dHSNbE8tBj1eEA",
-    site: "https://nikkicates.carrd.co",
-    inquiries: "mailto:info@strategicunmasking.com"
+    offers: "https://unmask.nikkicates.com/manual-checkout",
+    session: "https://nikkicates.github.io/structuralburnout/briefing.html",
+    site: "https://nikkicates.github.io/structuralburnout/services.html",
+    inquiries: "mailto:nikki@strategicunmasking.com"
   },
 
   manualRefs: {
